@@ -1,0 +1,9 @@
+engineStrict: true
+nodeVersion: 24.22.0
+pmOnFail: error
+
+savePrefix: ''
+
+minimumReleaseAge: 4320
+minimumReleaseAgeStrict: true
+minimumReleaseAgeIgnoreMissingTime: false
