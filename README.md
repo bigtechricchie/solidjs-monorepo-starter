@@ -15,11 +15,12 @@ implementation.
 
 ## Current status
 
-The repository currently contains only its framework-independent foundation.
+The repository currently contains its framework-independent foundation and an
+explicit Node.js and pnpm toolchain baseline.
 
-Node.js, pnpm, SolidJS, Vite, TypeScript, applications, libraries, Go services,
-repository tooling, and Git hooks will be introduced in separate reviewable
-commits as their responsibilities are established.
+SolidJS, Vite, TypeScript, applications, libraries, Go services, repository
+tooling, and Git hooks will be introduced in separate reviewable commits as
+their responsibilities are established.
 
 ## Engineering principles
 
