@@ -1,0 +1,11 @@
+{
+  "name": "solidjs-monorepo-starter",
+  "version": "0.0.0",
+  "description": "A security-focused SolidJS and Go monorepo starter designed for fast prototyping and clear application boundaries.",
+  "private": true,
+  "packageManager": "pnpm@12.14.0",
+  "engines": {
+    "node": "24.22.0",
+    "pnpm": "12.14.0"
+  }
+}
