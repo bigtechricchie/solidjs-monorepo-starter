@@ -12,16 +12,17 @@ if (pnpmExecutablePath === undefined || pnpmExecutablePath === '') {
 
 function runPnpm(arguments_, options = {}) {
   const extension = extname(pnpmExecutablePath).toLowerCase()
+  const javascriptExtensions = new Set(['.cjs', '.js', '.mjs'])
 
-  if (extension === '.exe') {
-    return execFileSync(pnpmExecutablePath, arguments_, options)
+  if (javascriptExtensions.has(extension)) {
+    return execFileSync(
+      process.execPath,
+      [pnpmExecutablePath, ...arguments_],
+      options,
+    )
   }
 
-  return execFileSync(
-    process.execPath,
-    [pnpmExecutablePath, ...arguments_],
-    options,
-  )
+  return execFileSync(pnpmExecutablePath, arguments_, options)
 }
 
 console.log('==> Node.js version')
