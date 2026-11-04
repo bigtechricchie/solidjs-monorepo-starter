@@ -1,0 +1,140 @@
+# Repository Tooling
+
+The `tools/` directory contains repository-owned development, verification, and maintenance tooling.
+
+Code in this directory supports the repository itself. It is not application runtime code and should not become a general-purpose library layer.
+
+## Current structure
+
+```text
+tools/
+└── scripts/
+    └── verify.mjs
+```
+
+Additional tooling should be added only when it has a clear repository-level responsibility.
+
+## Verification script
+
+`tools/scripts/verify.mjs` implements the canonical repository verification gate exposed through:
+
+```bash
+pnpm verify
+```
+
+The script currently verifies:
+
+- the expected Node.js version;
+- the expected pnpm version;
+- the installed top-level dependency graph;
+- the configured Vite version;
+- the configured TypeScript version.
+
+The script supports pnpm launchers that may be represented differently across development environments.
+
+For example, pnpm may be exposed as:
+
+- a native Windows executable;
+- a native Unix executable;
+- a JavaScript entry point.
+
+JavaScript launchers are executed through the current Node.js runtime. Native executables are invoked directly.
+
+This avoids relying on shell-specific command resolution inside the verification script.
+
+## Verification principles
+
+Repository verification must remain explicit and predictable.
+
+Verification tooling must not:
+
+- silently install dependencies;
+- rewrite the lockfile;
+- modify repository configuration;
+- change global package-manager configuration;
+- enable telemetry;
+- repair a failing development environment automatically;
+- weaken a failed check in order to make verification pass.
+
+A failed verification should identify a problem that must be understood and resolved deliberately.
+
+## Dependency installation
+
+Dependency installation is intentionally separate from repository verification.
+
+On a fresh checkout, install dependencies with:
+
+```bash
+pnpm install --frozen-lockfile
+```
+
+Then run:
+
+```bash
+pnpm verify
+```
+
+Using the frozen lockfile ensures that dependency installation follows the committed dependency graph rather than silently resolving a different graph.
+
+## Continuous integration
+
+GitHub Actions installs dependencies independently and then invokes the same canonical verification command:
+
+```bash
+pnpm verify
+```
+
+This keeps local and trusted CI verification aligned.
+
+CI may perform additional trusted-environment checks where appropriate, but repository verification logic should not be duplicated unnecessarily inside workflow configuration.
+
+## Tooling ownership
+
+Files under `tools/` should satisfy at least one of these responsibilities:
+
+- repository verification;
+- development-environment checks;
+- Git hook support;
+- CI support;
+- repository maintenance;
+- controlled code-generation support where generation is explicitly justified.
+
+Application-specific behavior belongs with the application that owns it.
+
+Reusable application capabilities belong in the appropriate library boundary.
+
+Backend runtime behavior belongs in the relevant service.
+
+## Adding new tooling
+
+Before introducing a new script or tool, establish:
+
+1. the problem it solves;
+2. why existing repository or platform capabilities are insufficient;
+3. whether it introduces a new dependency;
+4. whether it executes external processes;
+5. whether it modifies files or configuration;
+6. whether it performs network access;
+7. whether it behaves consistently across supported platforms;
+8. how its behavior will be verified.
+
+Repository tooling should remain small, understandable, reviewable, and portable where practical.
+
+## Security boundary
+
+Repository tooling is trusted code.
+
+Scripts in this directory may execute during local development, Git hooks, or CI and must therefore be reviewed with the same care as application code.
+
+Particular attention should be given to:
+
+- command execution;
+- filesystem modification;
+- environment variables;
+- dependency installation;
+- network access;
+- secrets;
+- generated files;
+- platform-specific behavior.
+
+The presence of a script in `tools/` does not make it trusted automatically. Trust comes from review, controlled dependencies, explicit behavior, and reproducible verification.
