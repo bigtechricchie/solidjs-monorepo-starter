@@ -5,8 +5,11 @@
   "private": true,
   "packageManager": "pnpm@12.15.0",
   "engines": {
-    "node": "24.22.0",
+    "node": "24.20.0",
     "pnpm": "12.15.0"
+  },
+  "scripts": {
+    "verify": "node tools/scripts/verify.mjs"
   },
   "dependencies": {
     "@solidjs/web": "2.0.0-rc.10",
