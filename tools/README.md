@@ -58,6 +58,46 @@ Verification tooling must not:
 
 A failed verification should identify a problem that must be understood and resolved deliberately.
 
+## Git hook setup
+
+Repository Git hooks are tracked under:
+
+```text
+tools/hooks/
+```
+
+They are not enabled automatically when the repository is cloned.
+
+After cloning the repository, enable the tracked hooks with:
+
+```bash
+bash tools/scripts/setup-hooks.sh
+```
+
+The setup script configures this repository only:
+
+```text
+core.hooksPath=tools/hooks
+```
+
+It does not change the user's global or system Git configuration.
+
+If the repository already has a different local `core.hooksPath`, the setup script stops and requires that configuration to be reviewed rather than replacing it silently.
+
+Confirm the configured hooks path with:
+
+```bash
+git config --local --get core.hooksPath
+```
+
+Expected output:
+
+```text
+tools/hooks
+```
+
+Git hooks are a local development safeguard and can be bypassed. Trusted CI remains the authoritative remote verification boundary.
+
 ## Dependency installation
 
 Dependency installation is intentionally separate from repository verification.

@@ -121,6 +121,20 @@ pnpm verify
 
 A successful verification confirms only that the checks currently implemented by the repository passed. It is not a security certification or proof that future application code is correct.
 
+
+## Local Git hooks
+
+After cloning the repository, enable the tracked local Git hooks:
+
+```bash
+bash tools/scripts/setup-hooks.sh
+```
+
+The hooks provide local development safeguards but do not replace trusted CI verification.
+
+See `tools/README.md` for the hook ownership and setup model.
+
+
 ## Continuous integration
 
 GitHub Actions performs independent repository verification for pushes to `main` and pull requests.
