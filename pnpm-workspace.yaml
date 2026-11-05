@@ -7,6 +7,11 @@ savePrefix: ''
 minimumReleaseAge: 4320
 minimumReleaseAgeStrict: true
 minimumReleaseAgeIgnoreMissingTime: false
+
+# Temporary exception for native SolidJS compiler testing.
+minimumReleaseAgeExclude:
+  - '@solidjs/vite-plugin@3.0.0-next.56'
+
 permissions:
   solid-js:
     skills: false

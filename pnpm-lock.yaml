@@ -167,15 +167,15 @@ importers:
   .:
     dependencies:
       '@solidjs/web':
-        specifier: 2.0.0-rc.10
-        version: 2.0.0-rc.10(solid-js@2.0.0-rc.10)
+        specifier: 2.0.0-rc.19
+        version: 2.0.0-rc.19(solid-js@2.0.0-rc.19)
       solid-js:
-        specifier: 2.0.0-rc.10
-        version: 2.0.0-rc.10
+        specifier: 2.0.0-rc.19
+        version: 2.0.0-rc.19
     devDependencies:
       '@solidjs/vite-plugin':
-        specifier: 3.0.0-next.46
-        version: 3.0.0-next.46(@solidjs/web@2.0.0-rc.10(solid-js@2.0.0-rc.10))(solid-js@2.0.0-rc.10)(vite@8.3.5(@types/node@24.19.2))
+        specifier: 3.0.0-next.56
+        version: 3.0.0-next.56(@solidjs/web@2.0.0-rc.19(solid-js@2.0.0-rc.19))(solid-js@2.0.0-rc.19)(vite@8.3.5(@types/node@24.19.2))
       '@types/node':
         specifier: 24.19.2
         version: 24.19.2
@@ -454,14 +454,14 @@ packages:
     resolution: {integrity: sha512-BIL5dKm0dAtPGsCEuLSNw60spDbmYG5QFK+aHUxPIgPLweA8IeJKd62DiqqqU/jqX0x39ty31GoP1n+ZINkrcg==}
     engines: {node: '>=22.12.0'}
 
-  '@solidjs/vite-plugin@3.0.0-next.46':
-    resolution: {integrity: sha512-iKVgtv5xroO6FgNkt6jYQYUsjlk6luv4EsXuSwzSP1Wslj9tKN7X9bWMHBq9EtlOtNCTRb+e579mmL+6c1xkpw==}
+  '@solidjs/vite-plugin@3.0.0-next.56':
+    resolution: {integrity: sha512-ox+Y0+UTC38/n7ky3z11jp9nDGMk/yjX8DbSIKri2S4SzE8fA7RA65z3yFQNd+Cs17fGTVnN4wpKgkItHlg2sw==}
     engines: {node: '>=22.12.0'}
     peerDependencies:
       '@solidjs/start-devtools': ^1.0.0-next.2
-      '@solidjs/web': ^2.0.0-rc.10
+      '@solidjs/web': ^2.0.0-rc.19
       '@testing-library/jest-dom': ^5.16.6 || ^5.17.0 || ^6.0.0 || ^7.0.0
-      solid-js: ^2.0.0-rc.10
+      solid-js: ^2.0.0-rc.19
       vite: ^8.0.0 || ^9.0.0
     peerDependenciesMeta:
       '@solidjs/start-devtools':
@@ -469,11 +469,11 @@ packages:
       '@testing-library/jest-dom':
         optional: true
 
-  '@solidjs/web@2.0.0-rc.10':
-    resolution: {integrity: sha512-CHXXV5BtqUkuxz/AM45WUKCYF/OiBhC6fOe9gyiktES2bpKj6SUL2xxIciM7q7G+ewYXAN/SGy1/SNFSrxjrOQ==}
+  '@solidjs/web@2.0.0-rc.19':
+    resolution: {integrity: sha512-FTHxQ8aE+vSHWc1exWw2Y+Brb727I4hCiWi+Y0DURbaqCou8xjCTzn8uiPi7mwC1tqpKSWfkn1Iq1ya/Bl9vYQ==}
     engines: {node: '>=22.12.0'}
     peerDependencies:
-      solid-js: ^2.0.0-rc.10
+      solid-js: ^2.0.0-rc.19
 
   '@tybys/wasm-util@0.10.4':
     resolution: {integrity: sha512-W3c4gRigFS0T/Ma4qIYF3GDAc5AQdHb1yL5znJT1Zv1YaD9Kitx656wBjvr19qbiosmZT8lWDM5BEMynUqX65A==}
@@ -771,6 +771,9 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
+  magic-string@0.30.21:
+    resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
+
   merge-anything@5.1.7:
     resolution: {integrity: sha512-eRtbOb1N5iyH0tkQDAoQ4Ipsp/5qSR79Dzrz8hEPxRX10RWWR/iQXdoKmBSRCThY1Fh5EhISDtpSc93fpxUniQ==}
     engines: {node: '>=12.13'}
@@ -810,18 +813,18 @@ packages:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
     hasBin: true
 
-  seroval-plugins@1.6.12:
-    resolution: {integrity: sha512-+reiwp/lYxiyctSrdvX7OQ1YLrcbWYgBiZrhSFL+V43b0/DGRLNVSDyZINbQe+tWplPOI2fw2dPrdv6hcc09kQ==}
-    engines: {node: '>=10'}
+  seroval-plugins@1.7.0:
+    resolution: {integrity: sha512-WM4rArfPtLZriTuxC5DBvNulEwAaRcjNe/dkMOEesOcuvXf5nEwKf5Bw3AT92WHohqcc45+57GdtsCuBTI0mjw==}
+    engines: {node: '>=20'}
     peerDependencies:
       seroval: ^1.0
 
-  seroval@1.6.12:
-    resolution: {integrity: sha512-CqbIVfk/7GL3ITwZI55lcPbpQbjHZ2DD5cUj4iH7E9YsCfHNJV1mx7yNp86Z84w5IpmkZZS/2s5vPOWmVWSdQg==}
-    engines: {node: '>=10'}
+  seroval@1.7.0:
+    resolution: {integrity: sha512-FU+LUkmDzWNsJ6oubZFN3dGPKny53DRhPJG6nftEaXDL8MIn19+kEE1Gvc+63Go+qPOwVUlKIdKhsu2HN6tksw==}
+    engines: {node: '>=20'}
 
-  solid-js@2.0.0-rc.10:
-    resolution: {integrity: sha512-eh25kmg7yXuJCVN2VpS03bUuTJ0rvb7MnJyIw+8tcSRwnINaugyI5RLwPMy9Rji94CqsMbDrD9Ixh9bRuBMwwQ==}
+  solid-js@2.0.0-rc.19:
+    resolution: {integrity: sha512-tlA+rZT1n3XkuxW0sMIoRf/QpOa0H9N9ZDrZLQFueUkZp+hElG+EXWBojBYYi4lVBKV8l03RTNgv+lfVCYkp9w==}
     engines: {node: '>=22.12.0'}
 
   source-map-js@1.2.2:
@@ -1154,27 +1157,28 @@ snapshots:
 
   '@solidjs/signals@2.0.0-rc.20': {}
 
-  '@solidjs/vite-plugin@3.0.0-next.46(@solidjs/web@2.0.0-rc.10(solid-js@2.0.0-rc.10))(solid-js@2.0.0-rc.10)(vite@8.3.5(@types/node@24.19.2))':
+  '@solidjs/vite-plugin@3.0.0-next.56(@solidjs/web@2.0.0-rc.19(solid-js@2.0.0-rc.19))(solid-js@2.0.0-rc.19)(vite@8.3.5(@types/node@24.19.2))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@babel/core': 7.29.7
       '@solidjs/babel-plugin': 2.0.0-rc.20(@babel/core@7.29.7)
       '@solidjs/compiler': 2.0.0-rc.20
-      '@solidjs/web': 2.0.0-rc.10(solid-js@2.0.0-rc.10)
+      '@solidjs/web': 2.0.0-rc.19(solid-js@2.0.0-rc.19)
       '@types/babel__core': 7.20.5
+      magic-string: 0.30.21
       merge-anything: 5.1.7
-      solid-js: 2.0.0-rc.10
+      solid-js: 2.0.0-rc.19
       vite: 8.3.5(@types/node@24.19.2)
       vitefu: 1.1.3(vite@8.3.5(@types/node@24.19.2))
     transitivePeerDependencies:
       - '@tsrx/core'
       - supports-color
 
-  '@solidjs/web@2.0.0-rc.10(solid-js@2.0.0-rc.10)':
+  '@solidjs/web@2.0.0-rc.19(solid-js@2.0.0-rc.19)':
     dependencies:
-      seroval: 1.6.12
-      seroval-plugins: 1.6.12(seroval@1.6.12)
-      solid-js: 2.0.0-rc.10
+      seroval: 1.7.0
+      seroval-plugins: 1.7.0(seroval@1.7.0)
+      solid-js: 2.0.0-rc.19
 
   '@tybys/wasm-util@0.10.4':
     dependencies:
@@ -1366,6 +1370,10 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
+  magic-string@0.30.21:
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.6.0
+
   merge-anything@5.1.7:
     dependencies:
       is-what: 4.1.16
@@ -1413,18 +1421,18 @@ snapshots:
 
   semver@6.3.1: {}
 
-  seroval-plugins@1.6.12(seroval@1.6.12):
+  seroval-plugins@1.7.0(seroval@1.7.0):
     dependencies:
-      seroval: 1.6.12
+      seroval: 1.7.0
 
-  seroval@1.6.12: {}
+  seroval@1.7.0: {}
 
-  solid-js@2.0.0-rc.10:
+  solid-js@2.0.0-rc.19:
     dependencies:
       '@solidjs/signals': 2.0.0-rc.20
       csstype: 3.2.3
-      seroval: 1.6.12
-      seroval-plugins: 1.6.12(seroval@1.6.12)
+      seroval: 1.7.0
+      seroval-plugins: 1.7.0(seroval@1.7.0)
 
   source-map-js@1.2.2: {}
 
