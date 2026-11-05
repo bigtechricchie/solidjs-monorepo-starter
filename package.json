@@ -11,6 +11,7 @@
   "scripts": {
     "build:reference-app": "vite build projects/reference-app --config vite.config.ts",
     "dev:reference-app": "vite projects/reference-app --config vite.config.ts",
+    "test:reference-app": "vitest run --config vitest.config.mts",
     "typecheck:reference-app": "tsc --project projects/reference-app/tsconfig.json",
     "verify": "node tools/scripts/verify.mjs"
   },
@@ -19,9 +20,12 @@
     "solid-js": "2.0.0-rc.19"
   },
   "devDependencies": {
+    "@solidjs/testing-library": "1.0.0-rc.2",
     "@solidjs/vite-plugin": "3.0.0-next.56",
     "@types/node": "24.19.2",
+    "jsdom": "30.1.3",
     "typescript": "7.0.2",
-    "vite": "8.3.5"
+    "vite": "8.3.5",
+    "vitest": "5.0.5"
   }
 }
