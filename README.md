@@ -146,7 +146,9 @@ The workflow currently:
 3. installs the exact pnpm version;
 4. verifies the pnpm version;
 5. installs dependencies using the frozen lockfile;
-6. runs the canonical `pnpm verify` gate.
+6. audits dependencies for known high or critical advisories;
+7. runs the canonical `pnpm verify` gate;
+8. validates tracked shell-script syntax.
 
 Workflow permissions are deliberately minimal and currently grant read access to repository contents only.
 

@@ -111,12 +111,25 @@ pre-commit
 → checks staged additions for common credential and private-key patterns
 
 pre-push
+→ audits dependencies for known high or critical advisories
 → runs the canonical pnpm verify gate before a push leaves the local repository
 ```
 
 The pre-commit safeguard scans only staged additions. It does not print suspected secret values.
 
 The check is intentionally limited defense in depth. It may produce false positives, can be bypassed with Git hook controls, does not scan repository history, and does not replace trusted CI or dedicated secret-scanning capabilities.
+
+The pre-push hook always runs:
+
+```bash
+pnpm audit --audit-level=high
+```
+
+before repository verification.
+
+The audit is defense in depth. A successful audit means no matching known advisories were reported by the configured registry at that time. It does not prove that every dependency is safe or that unknown vulnerabilities do not exist.
+
+Dependency auditing may require registry access and can therefore fail independently of deterministic repository verification.
 
 Git hooks are a local development safeguard and can be bypassed. Trusted CI remains the authoritative remote verification boundary.
 
@@ -140,7 +153,7 @@ Using the frozen lockfile ensures that dependency installation follows the commi
 
 ## Continuous integration
 
-GitHub Actions installs dependencies independently and then invokes the same canonical verification command:
+GitHub Actions installs dependencies independently, audits them for known high or critical advisories, and then invokes the same canonical verification command:
 
 ```bash
 pnpm verify

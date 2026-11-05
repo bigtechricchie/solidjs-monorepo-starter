@@ -4,4 +4,7 @@ set -euo pipefail
 repository_root="$(git rev-parse --show-toplevel)"
 cd "$repository_root"
 
+# Git sends pushed refs on stdin. Prevent child processes from consuming them.
+pnpm audit --audit-level=high < /dev/null
+
 pnpm verify < /dev/null
