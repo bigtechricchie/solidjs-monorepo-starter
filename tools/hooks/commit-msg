@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+message_file="${1:?commit message file required}"
+first_line="$(head -n 1 "$message_file")"
+
+pattern='^(feat|fix|chore|docs|refactor|test|style|ci|build|security)(\([a-z0-9][a-z0-9-]*\))?(!)?: .+'
+
+if [[ "$first_line" =~ $pattern ]]; then
+  exit 0
+fi
+
+echo "Commit subject must follow Conventional Commits, for example:" >&2
+echo "  fix(verify): handle native pnpm executables" >&2
+exit 1

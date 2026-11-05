@@ -8,7 +8,11 @@ Code in this directory supports the repository itself. It is not application run
 
 ```text
 tools/
+├── hooks/
+│   ├── commit-msg
+│   └── pre-push
 └── scripts/
+    ├── setup-hooks.sh
     └── verify.mjs
 ```
 
@@ -94,6 +98,16 @@ Expected output:
 
 ```text
 tools/hooks
+```
+
+The tracked hooks currently provide:
+
+```text
+commit-msg
+→ enforces the repository's Conventional Commits subject format
+
+pre-push
+→ runs the canonical pnpm verify gate before a push leaves the local repository
 ```
 
 Git hooks are a local development safeguard and can be bypassed. Trusted CI remains the authoritative remote verification boundary.
