@@ -9,8 +9,8 @@
     "pnpm": "12.15.0"
   },
   "scripts": {
-    "build:reference-app": "vite build projects/reference-app --config vite.config.ts",
-    "dev:reference-app": "vite projects/reference-app --config vite.config.ts",
+    "build:reference-app": "vite build projects/reference-app --config vite.config.mts",
+    "dev:reference-app": "vite projects/reference-app --config vite.config.mts",
     "test:reference-app": "vitest run --config vitest.config.mts",
     "typecheck:reference-app": "tsc --project projects/reference-app/tsconfig.json",
     "verify": "node tools/scripts/verify.mjs"

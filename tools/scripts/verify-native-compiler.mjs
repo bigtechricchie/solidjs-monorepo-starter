@@ -10,7 +10,7 @@ const outputDirectory = await mkdtemp(join(tmpdir(), 'solid-native-compiler-'))
 
 try {
   await build({
-    configFile: resolve(repositoryRoot, 'vite.config.ts'),
+    configFile: resolve(repositoryRoot, 'vite.config.mts'),
     root: fixtureDirectory,
     logLevel: 'error',
     build: {
