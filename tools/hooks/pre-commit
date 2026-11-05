@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repository_root="$(git rev-parse --show-toplevel)"
+cd "$repository_root"
+
+staged_additions="$(
+  git diff \
+    --cached \
+    --no-ext-diff \
+    --unified=0 \
+    --diff-filter=ACMR \
+    -- . |
+    awk '/^\+\+\+/ { next } /^\+/ { print substr($0, 2) }'
+)"
+
+if [[ -z "$staged_additions" ]]; then
+  exit 0
+fi
+
+credential_pattern='(password|passwd|secret|api[_-]?key|access[_-]?token|client[_-]?secret|private[_-]?key)[[:space:]]*[:=][[:space:]]*[^[:space:]{}]+'
+private_key_pattern='-----BEGIN ([A-Z ]+ )?PRIVATE KEY-----'
+
+if printf '%s\n' "$staged_additions" | grep -Eiq -- "$credential_pattern" ||
+   printf '%s\n' "$staged_additions" | grep -Eq -- "$private_key_pattern"; then
+  echo "Staged additions contain potential credentials or a private-key header." >&2
+  echo "Review staged changes before committing. No secret values are printed." >&2
+  exit 1
+fi

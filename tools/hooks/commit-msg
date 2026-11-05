@@ -1,15 +1,18 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-message_file="${1:?commit message file required}"
-first_line="$(head -n 1 "$message_file")"
+COMMIT_MESSAGE_FILE="$1"
+COMMIT_MESSAGE="$(head -n 1 "$COMMIT_MESSAGE_FILE")"
 
-pattern='^(feat|fix|chore|docs|refactor|test|style|ci|build|security)(\([a-z0-9][a-z0-9-]*\))?(!)?: .+'
+PATTERN='^(feat|fix|chore|docs|refactor|test|style|ci|build|security)(\([a-z0-9-]+\))?: .{1,100}$'
 
-if [[ "$first_line" =~ $pattern ]]; then
-  exit 0
+if ! printf '%s\n' "$COMMIT_MESSAGE" | grep -qE "$PATTERN"; then
+  echo "Invalid commit message:"
+  echo "  $COMMIT_MESSAGE"
+  echo ""
+  echo "Expected:"
+  echo "  type(scope): description"
+  echo "  type: description"
+  echo ""
+  exit 1
 fi
-
-echo "Commit subject must follow Conventional Commits, for example:" >&2
-echo "  fix(verify): handle native pnpm executables" >&2
-exit 1
