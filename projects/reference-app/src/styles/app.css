@@ -1,7 +1,7 @@
 html {
-  font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+  background: var(--color-surface);
+  color: var(--color-on-surface);
+  font-family: var(--font-sans);
 }
 
 a,
@@ -11,7 +11,7 @@ button {
 
 a:focus-visible,
 button:focus-visible {
-  outline: 0.1875rem solid currentColor;
+  outline: 0.1875rem solid var(--color-focus);
 }
 
 .app {
@@ -21,17 +21,17 @@ button:focus-visible {
 }
 
 .app__header {
-  border-block-end: 0.0625rem solid #d7d7d7;
+  border-block-end: 0.0625rem solid var(--color-border-subtle);
 }
 
 .app__header-inner {
   align-items: center;
   display: flex;
-  gap: 1rem;
-  inline-size: min(100% - 2rem, 72rem);
+  gap: var(--space-4);
+  inline-size: min(100% - var(--space-8), 72rem);
   justify-content: space-between;
   margin-inline: auto;
-  padding-block: 1rem;
+  padding-block: var(--space-4);
 }
 
 .app__title {
@@ -41,7 +41,7 @@ button:focus-visible {
 
 .app__navigation {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .app__navigation-link {
@@ -51,9 +51,9 @@ button:focus-visible {
 
 .app__main {
   flex: 1;
-  inline-size: min(100% - 2rem, 72rem);
+  inline-size: min(100% - var(--space-8), 72rem);
   margin-inline: auto;
-  padding-block: 2rem;
+  padding-block: var(--space-8);
 }
 
 .app__content {
@@ -61,7 +61,7 @@ button:focus-visible {
 }
 
 .app__section-title {
-  margin-block: 0 1rem;
+  margin-block: 0 var(--space-4);
 }
 
 .app__button {
@@ -71,5 +71,5 @@ button:focus-visible {
   color: inherit;
   cursor: pointer;
   padding-block: 0.625rem;
-  padding-inline: 1rem;
+  padding-inline: var(--space-4);
 }
