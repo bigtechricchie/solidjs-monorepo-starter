@@ -67,9 +67,15 @@ runPnpm(['exec', 'tsc', '--version'], {
   stdio: 'inherit',
 })
 
-console.log('==> Native Solid compiler')
-execFileSync(process.execPath, ['tools/scripts/verify-native-compiler.mjs'], {
-  stdio: 'inherit',
-})
+console.log('==> Native Solid compiler (Babel imports blocked)')
+execFileSync(
+  process.execPath,
+  [
+    '--import',
+    './tools/scripts/block-babel.mjs',
+    'tools/scripts/verify-native-compiler.mjs',
+  ],
+  { stdio: 'inherit' },
+)
 
 console.log('==> Repository verification passed')
