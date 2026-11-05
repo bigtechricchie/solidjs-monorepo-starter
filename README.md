@@ -14,7 +14,7 @@ Framework-specific decisions are introduced deliberately and reviewed on their o
 
 ## Current status
 
-The repository currently provides the reviewed frontend toolchain and repository-verification foundation for future SolidJS applications and Go services.
+The repository provides a reviewed frontend toolchain, a minimal SolidJS reference application, and repository-owned verification as a foundation for future SolidJS applications and Go services.
 
 The current baseline includes:
 
@@ -26,10 +26,11 @@ The current baseline includes:
 - pnpm dependency and supply-chain policy;
 - a committed lockfile;
 - explicit denial of dependency-provided agent skills;
-- a canonical repository verification command;
+- a canonical repository verification command with a Babel-blocked native TSX compiler fixture;
+- a minimal reference application in `projects/reference-app` with explicit development, build, and type-check scripts;
 - trusted GitHub Actions verification with SHA-pinned actions and minimal permissions.
 
-Applications, reusable libraries, Go services, testing infrastructure, Git hooks, routing, state management, and other capabilities will be introduced only when their responsibilities are established and reviewed.
+Further applications, reusable libraries, Go services, testing infrastructure, routing, state management, and other capabilities will be introduced only when their responsibilities are established and reviewed.
 
 ## Toolchain baseline
 
@@ -45,9 +46,9 @@ TypeScript  7.0.2
 The current SolidJS packages are:
 
 ```text
-solid-js               2.0.0-rc.10
-@solidjs/web            2.0.0-rc.10
-@solidjs/vite-plugin    3.0.0-next.46
+solid-js               2.0.0-rc.19
+@solidjs/web            2.0.0-rc.19
+@solidjs/vite-plugin    3.0.0-next.56
 ```
 
 SolidJS 2 is currently being used deliberately because this repository requires the native Solid compiler rather than Babel as the application compiler.
@@ -64,11 +65,17 @@ solid({
 })
 ```
 
-This means application JSX and TSX compilation uses the native Solid compiler.
+This selects the native SolidJS compiler for the repository's configured JSX and TSX compilation.
 
-Babel-related packages may still appear as transitive dependencies of the official Solid Vite integration because the integration supports multiple compiler backends.
+The official Vite plugin still declares Babel packages as dependencies to support its alternative compiler backend. Consequently, `@babel/core` and `@solidjs/babel-plugin` remain installed transitively in this repository even when `compiler: 'native'` is selected. **Installed dependencies and modules actually loaded during a build are different properties.**
 
-Their presence in the dependency graph does not mean Babel is being used to compile this application's source code.
+### Native compiler verification and limitations
+
+Canonical `pnpm verify` builds a representative reactive TSX fixture with Node.js module-resolution hooks that reject recognised Babel imports. With the pinned plugin version, the fixture compiles successfully while this blocker is enabled. The same check runs in GitHub Actions.
+
+This verifies the tested native compilation path; it does **not** establish that Babel is absent from the installed dependency graph or that every development, server-rendering, custom-options, or reference-application build path avoids Babel. Reference-application verification is handled separately.
+
+A request for an officially supported Babel-free installation path is tracked upstream in [solidjs/solid-vite-plugin#531](https://github.com/solidjs/solid-vite-plugin/issues/531). Until such an integration is supported, do not force-remove the plugin's Babel dependencies with package-manager overrides.
 
 ## Dependency policy
 
@@ -79,19 +86,22 @@ The repository currently uses:
 - exact dependency versions;
 - a committed pnpm lockfile;
 - strict engine enforcement;
-- a dependency-release cooldown;
+- a 72-hour dependency-release cooldown (`minimumReleaseAge: 4320`);
+- a temporary, version-specific cooldown exception for `@solidjs/vite-plugin@3.0.0-next.56`, to be reviewed and removed when no longer needed;
 - frozen-lockfile installation in CI;
 - explicit dependency permissions.
 
-The workspace currently denies the `solid-js` dependency-provided agent skill:
+The workspace explicitly denies dependency-provided agent skills for both `solid-js` and `@solidjs/web`:
 
 ```yaml
 permissions:
+  '@solidjs/web':
+    skills: false
   solid-js:
     skills: false
 ```
 
-Using `solid-js` as an application dependency is independent from trusting package-provided instructions for AI coding agents.
+Installing a framework package does not authorise its agent instructions. Any additional permissions require separate review.
 
 ## Repository verification
 
@@ -101,7 +111,7 @@ The canonical repository verification command is:
 pnpm verify
 ```
 
-The command currently verifies the repository-owned Node.js and pnpm versions and checks that the expected Vite and TypeScript tooling can be invoked from the installed dependency graph.
+The command verifies the repository-owned Node.js and pnpm versions, confirms that Vite and TypeScript can be invoked from the installed dependency graph, and builds a native SolidJS TSX fixture with recognised Babel module imports blocked.
 
 The same verification entry point is used locally and by GitHub Actions.
 
@@ -118,6 +128,16 @@ Then run:
 ```bash
 pnpm verify
 ```
+
+The reference application has separate development, build, and type-check commands:
+
+```bash
+pnpm dev:reference-app
+pnpm build:reference-app
+pnpm typecheck:reference-app
+```
+
+These scripts exist independently of the compiler fixture. Do not assume they are included in `pnpm verify` until the canonical verification script explicitly invokes them.
 
 A successful verification confirms only that the checks currently implemented by the repository passed. It is not a security certification or proof that future application code is correct.
 
