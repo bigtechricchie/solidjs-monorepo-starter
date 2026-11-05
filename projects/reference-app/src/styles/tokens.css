@@ -1,0 +1,17 @@
+:root {
+  --color-border-subtle: #d8d8d8;
+  --color-focus: #005fcc;
+  --color-on-surface: #1a1c1e;
+  --color-surface: #ffffff;
+
+  --space-2: 0.5rem;
+  --space-4: 1rem;
+  --space-8: 2rem;
+
+  --font-sans:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+}
