@@ -10,6 +10,7 @@ Code in this directory supports the repository itself. It is not application run
 tools/
 ├── hooks/
 │   ├── commit-msg
+│   ├── pre-commit
 │   └── pre-push
 └── scripts/
     ├── setup-hooks.sh
@@ -106,9 +107,16 @@ The tracked hooks currently provide:
 commit-msg
 → enforces the repository's Conventional Commits subject format
 
+pre-commit
+→ checks staged additions for common credential and private-key patterns
+
 pre-push
 → runs the canonical pnpm verify gate before a push leaves the local repository
 ```
+
+The pre-commit safeguard scans only staged additions. It does not print suspected secret values.
+
+The check is intentionally limited defense in depth. It may produce false positives, can be bypassed with Git hook controls, does not scan repository history, and does not replace trusted CI or dedicated secret-scanning capabilities.
 
 Git hooks are a local development safeguard and can be bypassed. Trusted CI remains the authoritative remote verification boundary.
 
