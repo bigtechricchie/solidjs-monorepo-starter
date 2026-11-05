@@ -84,6 +84,12 @@ runPnpm(['run', 'typecheck:reference-app'], {
   stdio: 'inherit',
 })
 
+console.log('==> Reference application tests')
+
+runPnpm(['run', 'test:reference-app'], {
+  stdio: 'inherit',
+})
+
 console.log('==> Reference application production build (Babel imports blocked)')
 execFileSync(
   process.execPath,
