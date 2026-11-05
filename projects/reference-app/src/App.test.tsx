@@ -18,7 +18,20 @@ describe('App', () => {
       }),
     ).toBeDefined()
 
-    expect(result.getByText('Reference application.')).toBeDefined()
+    expect(
+      result.getByRole('heading', {
+        level: 2,
+        name: 'Reference application',
+      }),
+    ).toBeDefined()
+
+    expect(
+      result.getByRole('navigation', {
+        name: 'Reference application',
+      }),
+    ).toBeDefined()
+
+    expect(result.getByRole('main')).toBeDefined()
   })
 
   it('updates the count when the button is activated', async () => {
