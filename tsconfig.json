@@ -18,7 +18,7 @@
     "module": "preserve",
     "moduleResolution": "bundler",
     "jsx": "preserve",
-    "jsxImportSource": "solid-js",
+    "jsxImportSource": "@solidjs/web",
     "noEmit": true
   },
   "files": []

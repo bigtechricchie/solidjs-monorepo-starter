@@ -10,8 +10,6 @@ This repository is being constructed incrementally from first principles.
 
 The repository is being designed around explicit ownership, minimal dependencies, reproducible verification, and SolidJS-native architecture.
 
-Framework-specific decisions are introduced deliberately and reviewed on their own merits rather than inherited from another frontend architecture.
-
 ## Current status
 
 The repository provides a reviewed frontend toolchain, a minimal SolidJS reference application, and repository-owned verification as a foundation for future SolidJS applications and Go services.
@@ -127,7 +125,7 @@ The canonical repository verification command is:
 pnpm verify
 ```
 
-The command verifies the repository-owned Node.js and pnpm versions, confirms that Vite and TypeScript can be invoked from the installed dependency graph, and builds a native SolidJS TSX fixture with recognised Babel module imports blocked.
+The command verifies the repository-owned Node.js and pnpm versions, confirms that Vite and TypeScript can be invoked from the installed dependency graph, builds a native SolidJS TSX fixture with recognised Babel module imports blocked, type-checks the reference application, and production-builds the reference application with the same Babel module-resolution blocker enabled.
 
 The same verification entry point is used locally and by GitHub Actions.
 
@@ -145,7 +143,7 @@ Then run:
 pnpm verify
 ```
 
-The reference application has separate development, build, and type-check commands:
+The reference application also has separate development, build, and type-check commands:
 
 ```bash
 pnpm dev:reference-app
@@ -153,22 +151,42 @@ pnpm build:reference-app
 pnpm typecheck:reference-app
 ```
 
-These scripts exist independently of the compiler fixture. Do not assume they are included in `pnpm verify` until the canonical verification script explicitly invokes them.
+Canonical `pnpm verify` now invokes the reference application's type-check and performs its production build through repository-owned verification tooling. The verification build uses a temporary output directory and does not leave generated `dist/` content in the source tree.
 
 A successful verification confirms only that the checks currently implemented by the repository passed. It is not a security certification or proof that future application code is correct.
 
 
-## Local Git hooks
+## Local Git Hooks - Security Without Additional Dependencies
 
-After cloning the repository, enable the tracked local Git hooks:
+This repository uses native Git hooks to provide lightweight security and quality checks during local development.
+
+We deliberately avoid third-party Git hook managers such as Husky because Git already provides the functionality we need.
+
+This approach:
+
+- **Minimises supply-chain risk:** No additional npm packages or transitive dependencies are required to manage Git hooks.
+- **Keeps configuration transparent:** Hook scripts are stored in the repository and can be reviewed directly.
+- **Protects developer environments:** Hooks are enabled explicitly and do not modify global Git configuration.
+- **Provides early feedback:** Checks can identify potential credentials, invalid commit messages and dependency vulnerabilities before changes are pushed.
+- **Avoids unnecessary tooling:** Native Git capabilities are sufficient for the current requirements.
+
+The pre-push hook automatically runs `pnpm audit --audit-level=high` and `pnpm verify`. If a vulnerability is reported, dependency updates are investigated and applied manually after reviewing the advisory, affected packages, available versions and transitive dependencies.
+
+Git hooks never automatically install, upgrade or modify dependencies.
+
+### Enable local Git hooks
+
+After cloning the repository, run:
 
 ```bash
 bash tools/scripts/setup-hooks.sh
 ```
 
-The hooks provide local development safeguards but do not replace trusted CI verification.
+This configures the repository-local `core.hooksPath` to use `tools/hooks`.
 
-See `tools/README.md` for the hook ownership and setup model.
+Git hooks are local safeguards and can be bypassed. They do not replace independent security checks in GitHub Actions.
+
+See `tools/README.md` for implementation details.
 
 
 ## Continuous integration

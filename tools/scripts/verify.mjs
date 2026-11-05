@@ -78,4 +78,21 @@ execFileSync(
   { stdio: 'inherit' },
 )
 
+console.log('==> Reference application type check')
+
+runPnpm(['run', 'typecheck:reference-app'], {
+  stdio: 'inherit',
+})
+
+console.log('==> Reference application production build (Babel imports blocked)')
+execFileSync(
+  process.execPath,
+  [
+    '--import',
+    './tools/scripts/block-babel.mjs',
+    'tools/scripts/verify-reference-app.mjs',
+  ],
+  { stdio: 'inherit' },
+)
+
 console.log('==> Repository verification passed')
