@@ -1,6 +1,7 @@
 import { render } from '@solidjs/web'
 
 import App from './App'
+import './reset.css'
 import './styles.css'
 
 const rootElement = document.getElementById('root')
