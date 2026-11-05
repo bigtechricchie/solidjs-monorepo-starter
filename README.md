@@ -77,6 +77,22 @@ This verifies the tested native compilation path; it does **not** establish that
 
 A request for an officially supported Babel-free installation path is tracked upstream in [solidjs/solid-vite-plugin#531](https://github.com/solidjs/solid-vite-plugin/issues/531). Until such an integration is supported, do not force-remove the plugin's Babel dependencies with package-manager overrides.
 
+## Local development server network binding
+
+The Vite development and preview servers explicitly bind to the IPv4 loopback address `127.0.0.1` rather than relying on hostname resolution or wildcard interface defaults.
+
+Run the reference application with:
+
+```bash
+pnpm dev:reference-app
+```
+
+The default development URL is `http://127.0.0.1:5173/` when that port is available. Vite may select a different port if it is in use; use the address printed by Vite.
+
+The loopback bind reduces exposure to other machines on LAN or VPN interfaces, but it is **not** authentication: other local processes, browser-originated requests, and intentional forwarding or tunnelling remain relevant. Do not use production secrets or real customer data in local development. The intended host/interface for containers and production deployments must be explicitly reviewed separately.
+
+For more detail, see [Localhost Is Not a Security Boundary](https://github.com/bigtechricchie/engineering-articles/blob/main/articles/localhost-development-server-exposure.md).
+
 ## Dependency policy
 
 Dependencies are added deliberately and should remain minimal.
