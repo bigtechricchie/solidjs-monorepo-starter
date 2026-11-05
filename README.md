@@ -256,3 +256,9 @@ requirement
 Framework features, libraries, infrastructure, and repository automation should be introduced only when they solve a defined problem.
 
 The starter is intended to remain small enough to understand, review, and adapt rather than becoming a collection of speculative infrastructure.
+
+## Security decisions
+
+Security-oriented repository decisions, trust boundaries, temporary exceptions, and verification limitations are documented in [docs/security-decisions.md](docs/security-decisions.md).
+
+The document records what the current controls do and, equally importantly, what they do not prove.
