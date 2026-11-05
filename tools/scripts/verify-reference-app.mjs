@@ -10,7 +10,7 @@ const outputDirectory = await mkdtemp(join(tmpdir(), 'solid-reference-app-'))
 
 try {
   await build({
-    configFile: resolve(repositoryRoot, 'vite.config.ts'),
+    configFile: resolve(repositoryRoot, 'vite.config.mts'),
     root: applicationDirectory,
     logLevel: 'error',
     build: {
