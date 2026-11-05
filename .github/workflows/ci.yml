@@ -36,5 +36,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Audit dependencies
+        run: pnpm audit --audit-level=high
+
       - name: Verify repository
         run: pnpm verify
+
+      - name: Validate shell syntax
+        run: |
+          bash -n tools/hooks/pre-commit
+          bash -n tools/hooks/commit-msg
+          bash -n tools/hooks/pre-push
+          bash -n tools/scripts/setup-hooks.sh
