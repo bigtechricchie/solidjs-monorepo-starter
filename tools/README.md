@@ -8,12 +8,18 @@ Code in this directory supports the repository itself. It is not application run
 
 ```text
 tools/
+├── fixtures/
+│   └── native-compiler/
+│       ├── index.html
+│       └── main.tsx
 ├── hooks/
 │   ├── commit-msg
 │   ├── pre-commit
 │   └── pre-push
 └── scripts/
+    ├── block-babel.mjs
     ├── setup-hooks.sh
+    ├── verify-native-compiler.mjs
     ├── verify-reference-app.mjs
     └── verify.mjs
 ```
@@ -54,6 +60,12 @@ This avoids relying on shell-specific command resolution inside the verification
 `tools/scripts/verify-reference-app.mjs` builds the actual reference application into a temporary directory, checks that the expected HTML and JavaScript assets were produced, confirms representative application content is present in the generated JavaScript, and removes the temporary output in a `finally` block.
 
 Canonical verification launches that script with the existing Babel module-resolution blocker enabled. This extends the native-compiler regression protection from the focused compiler fixture to the actual reference application production build without duplicating the blocker implementation.
+
+`tools/fixtures/native-compiler/` contains the focused reactive TSX fixture used to exercise the configured native Solid compiler independently of the reference application.
+
+`tools/scripts/verify-native-compiler.mjs` production-builds that fixture into a temporary directory, verifies that expected HTML and JavaScript assets were generated, confirms representative fixture content is present, and removes the temporary output in a `finally` block.
+
+`tools/scripts/block-babel.mjs` registers Node.js module-resolution hooks that reject recognised Babel-related imports and resolved paths. It is a regression guard for the tested verification paths. It does not prove that Babel is absent from the installed dependency graph or that every possible tool or loading mechanism can never execute Babel-related code.
 
 ## Verification principles
 
