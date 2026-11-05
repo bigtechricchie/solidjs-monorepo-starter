@@ -14,6 +14,7 @@ tools/
 │   └── pre-push
 └── scripts/
     ├── setup-hooks.sh
+    ├── verify-reference-app.mjs
     └── verify.mjs
 ```
 
@@ -33,7 +34,10 @@ The script currently verifies:
 - the expected pnpm version;
 - the installed top-level dependency graph;
 - the configured Vite version;
-- the configured TypeScript version.
+- the configured TypeScript version;
+- the native Solid compiler fixture while recognised Babel imports are blocked;
+- the reference application's strict TypeScript configuration;
+- the reference application's production build while recognised Babel imports are blocked.
 
 The script supports pnpm launchers that may be represented differently across development environments.
 
@@ -46,6 +50,10 @@ For example, pnpm may be exposed as:
 JavaScript launchers are executed through the current Node.js runtime. Native executables are invoked directly.
 
 This avoids relying on shell-specific command resolution inside the verification script.
+
+`tools/scripts/verify-reference-app.mjs` builds the actual reference application into a temporary directory, checks that the expected HTML and JavaScript assets were produced, confirms representative application content is present in the generated JavaScript, and removes the temporary output in a `finally` block.
+
+Canonical verification launches that script with the existing Babel module-resolution blocker enabled. This extends the native-compiler regression protection from the focused compiler fixture to the actual reference application production build without duplicating the blocker implementation.
 
 ## Verification principles
 

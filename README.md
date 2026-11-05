@@ -111,7 +111,7 @@ The canonical repository verification command is:
 pnpm verify
 ```
 
-The command verifies the repository-owned Node.js and pnpm versions, confirms that Vite and TypeScript can be invoked from the installed dependency graph, and builds a native SolidJS TSX fixture with recognised Babel module imports blocked.
+The command verifies the repository-owned Node.js and pnpm versions, confirms that Vite and TypeScript can be invoked from the installed dependency graph, builds a native SolidJS TSX fixture with recognised Babel module imports blocked, type-checks the reference application, and production-builds the reference application with the same Babel module-resolution blocker enabled.
 
 The same verification entry point is used locally and by GitHub Actions.
 
@@ -129,7 +129,7 @@ Then run:
 pnpm verify
 ```
 
-The reference application has separate development, build, and type-check commands:
+The reference application also has separate development, build, and type-check commands:
 
 ```bash
 pnpm dev:reference-app
@@ -137,7 +137,7 @@ pnpm build:reference-app
 pnpm typecheck:reference-app
 ```
 
-These scripts exist independently of the compiler fixture. Do not assume they are included in `pnpm verify` until the canonical verification script explicitly invokes them.
+Canonical `pnpm verify` now invokes the reference application's type-check and performs its production build through repository-owned verification tooling. The verification build uses a temporary output directory and does not leave generated `dist/` content in the source tree.
 
 A successful verification confirms only that the checks currently implemented by the repository passed. It is not a security certification or proof that future application code is correct.
 
