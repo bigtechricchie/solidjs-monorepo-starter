@@ -1,8 +1,6 @@
-import { createSignal } from 'solid-js'
+import StarterFeedback from './components/StarterFeedback'
 
 function App() {
-  const [count, setCount] = createSignal(0)
-
   return (
     <div class="app">
       <header class="app__header">
@@ -20,18 +18,7 @@ function App() {
       <main class="app__main">
         <section class="app__content" id="reference-example">
           <h2 class="app__section-title">Reference application</h2>
-
-          <p>
-            Count: <output>{count()}</output>
-          </p>
-
-          <button
-            class="app__button"
-            type="button"
-            onClick={() => setCount((previous) => previous + 1)}
-          >
-            Increment count
-          </button>
+          <StarterFeedback />
         </section>
       </main>
     </div>
