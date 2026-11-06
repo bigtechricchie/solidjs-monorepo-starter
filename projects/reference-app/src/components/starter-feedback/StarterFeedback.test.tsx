@@ -38,15 +38,15 @@ describe('StarterFeedback', () => {
     const result = renderFeedback()
     const like = result.getByRole('button', { name: 'Like' })
     const dislike = result.getByRole('button', { name: 'Dislike' })
-    const likeTooltip = result.getByText('Mark this starter as helpful')
+    const likeTooltip = result.getByText('Mark this starter as helpful').parentElement
     const dislikeTooltip = result.getByText(
       'Mark this starter as needing improvement',
-    )
+    ).parentElement
 
-    expect(like.getAttribute('aria-describedby')).toBe(likeTooltip.id)
-    expect(dislike.getAttribute('aria-describedby')).toBe(dislikeTooltip.id)
-    expect(likeTooltip.getAttribute('role')).toBe('tooltip')
-    expect(dislikeTooltip.getAttribute('role')).toBe('tooltip')
+    expect(like.getAttribute('aria-describedby')).toBe(likeTooltip?.id)
+    expect(dislike.getAttribute('aria-describedby')).toBe(dislikeTooltip?.id)
+    expect(likeTooltip?.getAttribute('role')).toBe('tooltip')
+    expect(dislikeTooltip?.getAttribute('role')).toBe('tooltip')
   })
 
   it('uses text-only buttons without inline SVGs', () => {
