@@ -4,6 +4,10 @@
   margin-block-start: var(--space-8);
 }
 
+.starter-feedback__action {
+  position: relative;
+}
+
 .starter-feedback__actions {
   display: flex;
   flex-wrap: wrap;
@@ -11,7 +15,7 @@
 }
 
 .starter-feedback__button {
-  background: transparent;
+  background-color: transparent;
   border: var(--border-width-thin) solid var(--color-border-subtle);
   border-radius: var(--radius-small);
   color: inherit;
@@ -21,10 +25,47 @@
 }
 
 .starter-feedback__button[aria-pressed='true'] {
-  border-color: currentColor;
   font-weight: var(--font-weight-bold);
+}
+
+.starter-feedback__button--like[aria-pressed='true'] {
+  background-color: var(--color-positive-surface);
+  border-color: var(--color-positive-border);
+  color: var(--color-positive-text);
+}
+
+.starter-feedback__button--dislike[aria-pressed='true'] {
+  background-color: var(--color-negative-surface);
+  border-color: var(--color-negative-border);
+  color: var(--color-negative-text);
 }
 
 .starter-feedback__status {
   font-weight: var(--font-weight-semibold);
+}
+
+.starter-feedback__tooltip {
+  inline-size: max-content;
+  inset-block-start: 100%;
+  inset-inline-start: 0;
+  max-inline-size: min(16rem, 80vw);
+  padding-block-start: var(--space-2);
+  position: absolute;
+  visibility: hidden;
+  z-index: 1;
+}
+
+.starter-feedback__tooltip-content {
+  background-color: var(--color-on-surface);
+  border-radius: var(--radius-small);
+  color: var(--color-surface);
+  display: block;
+  font-size: var(--text-base);
+  padding: var(--space-2);
+  text-align: center;
+}
+
+.starter-feedback__action:not([data-dismissed='true']):hover .starter-feedback__tooltip,
+.starter-feedback__action:not([data-dismissed='true']) .starter-feedback__button:focus-visible + .starter-feedback__tooltip {
+  visibility: visible;
 }

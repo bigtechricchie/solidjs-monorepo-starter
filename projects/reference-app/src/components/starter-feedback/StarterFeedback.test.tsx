@@ -24,7 +24,7 @@ describe('StarterFeedback', () => {
     const result = renderFeedback()
 
     expect(
-      result.getByRole('heading', { name: 'Do you like this starter?' }),
+      result.getByRole('heading', { level: 3, name: 'Do you like this starter?' }),
     ).toBeDefined()
     expect(result.getByRole('status', { name: '' }).textContent).toBe(
       'Choose a reaction to try this interactive example.',
@@ -32,6 +32,97 @@ describe('StarterFeedback', () => {
     expect(result.getByRole('button', { name: 'Like' }).getAttribute('aria-pressed')).toBe('false')
     expect(result.getByRole('button', { name: 'Dislike' }).getAttribute('aria-pressed')).toBe('false')
     expect(result.getByText(/not saved or submitted/)).toBeDefined()
+  })
+
+  it('connects descriptive tooltips to both reaction buttons', () => {
+    const result = renderFeedback()
+    const like = result.getByRole('button', { name: 'Like' })
+    const dislike = result.getByRole('button', { name: 'Dislike' })
+    const likeTooltip = result.getByText('Mark this starter as helpful').parentElement
+    const dislikeTooltip = result.getByText(
+      'Mark this starter as needing improvement',
+    ).parentElement
+
+    expect(like.getAttribute('aria-describedby')).toBe(likeTooltip?.id)
+    expect(dislike.getAttribute('aria-describedby')).toBe(dislikeTooltip?.id)
+    expect(likeTooltip?.getAttribute('role')).toBe('tooltip')
+    expect(dislikeTooltip?.getAttribute('role')).toBe('tooltip')
+  })
+
+  it('uses text-only buttons without inline SVGs', () => {
+    const result = renderFeedback()
+    const like = result.getByRole('button', { name: 'Like' })
+    const dislike = result.getByRole('button', { name: 'Dislike' })
+
+    expect(like.textContent?.trim()).toBe('Like')
+    expect(dislike.textContent?.trim()).toBe('Dislike')
+    expect(result.container.querySelector('svg')).toBeNull()
+  })
+
+  it('dismisses tooltips after click and pointer exit, and resets on re-entry', async () => {
+    const result = renderFeedback()
+    const like = result.getByRole('button', { name: 'Like' })
+    const wrapper = like.parentElement
+
+    if (wrapper === null) {
+      throw new Error('Expected tooltip wrapper')
+    }
+
+    expect(wrapper.getAttribute('data-dismissed')).toBe('false')
+
+    fireEvent.mouseEnter(wrapper)
+    fireEvent.click(like)
+    fireEvent.mouseLeave(wrapper)
+
+    await waitFor(() => {
+      expect(wrapper.getAttribute('data-dismissed')).toBe('true')
+    })
+
+    fireEvent.mouseEnter(wrapper)
+    await waitFor(() => {
+      expect(wrapper.getAttribute('data-dismissed')).toBe('false')
+    })
+
+    fireEvent.keyDown(like, { key: 'Escape' })
+    await waitFor(() => {
+      expect(wrapper.getAttribute('data-dismissed')).toBe('true')
+    })
+
+    fireEvent.mouseLeave(wrapper)
+    expect(wrapper.getAttribute('data-dismissed')).toBe('true')
+
+    fireEvent.mouseEnter(wrapper)
+    await waitFor(() => {
+      expect(wrapper.getAttribute('data-dismissed')).toBe('false')
+    })
+  })
+
+  it('styles only the selected reaction using distinct modifier classes', async () => {
+    const result = renderFeedback()
+    const like = result.getByRole('button', { name: 'Like' })
+    const dislike = result.getByRole('button', { name: 'Dislike' })
+
+    expect(like.classList.contains('starter-feedback__button--like')).toBe(true)
+    expect(dislike.classList.contains('starter-feedback__button--dislike')).toBe(true)
+    expect(like.getAttribute('aria-pressed')).toBe('false')
+    expect(dislike.getAttribute('aria-pressed')).toBe('false')
+
+    fireEvent.click(like)
+    await waitFor(() => {
+      expect(like.getAttribute('aria-pressed')).toBe('true')
+      expect(dislike.getAttribute('aria-pressed')).toBe('false')
+    })
+
+    fireEvent.click(dislike)
+    await waitFor(() => {
+      expect(like.getAttribute('aria-pressed')).toBe('false')
+      expect(dislike.getAttribute('aria-pressed')).toBe('true')
+    })
+
+    fireEvent.click(dislike)
+    await waitFor(() => {
+      expect(dislike.getAttribute('aria-pressed')).toBe('false')
+    })
   })
 
   it('notifies the parent when Like is selected or cleared', async () => {

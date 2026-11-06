@@ -3,7 +3,13 @@
 
   --color-border-subtle: #d8d8d8;
   --color-focus: #005fcc;
+  --color-negative-border: #fecdca;
+  --color-negative-surface: #fef3f2;
+  --color-negative-text: #b42318;
   --color-on-surface: #1a1c1e;
+  --color-positive-border: #a6f4c5;
+  --color-positive-surface: #ecfdf3;
+  --color-positive-text: #067647;
   --color-surface: #ffffff;
 
   --content-width: 48rem;
