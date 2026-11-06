@@ -2,6 +2,14 @@ import './StarterFeedback.css'
 
 export type Reaction = 'like' | 'dislike'
 
+const DEFAULT_FEEDBACK_MESSAGE =
+  'Choose a reaction to try this interactive example.'
+
+const FEEDBACK_MESSAGES: Record<Reaction, string> = {
+  dislike: 'Thanks for sharing your feedback.',
+  like: 'Thanks for your positive feedback!',
+}
+
 interface StarterFeedbackProps {
   count: number
   onReactionChange: (reaction: Reaction | null) => void
@@ -16,14 +24,11 @@ function StarterFeedback(props: StarterFeedbackProps) {
   }
 
   const feedbackMessage = () => {
-    switch (props.reaction) {
-      case 'like':
-        return 'Thanks for your positive feedback!'
-      case 'dislike':
-        return 'Thanks for sharing your feedback.'
-      default:
-        return 'Choose a reaction to try this interactive example.'
-    }
+    const reaction = props.reaction
+
+    return reaction === null
+      ? DEFAULT_FEEDBACK_MESSAGE
+      : FEEDBACK_MESSAGES[reaction]
   }
 
   return (
