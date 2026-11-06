@@ -97,6 +97,34 @@ describe('StarterFeedback', () => {
     })
   })
 
+  it('styles only the selected reaction using distinct modifier classes', async () => {
+    const result = renderFeedback()
+    const like = result.getByRole('button', { name: 'Like' })
+    const dislike = result.getByRole('button', { name: 'Dislike' })
+
+    expect(like.classList.contains('starter-feedback__button--like')).toBe(true)
+    expect(dislike.classList.contains('starter-feedback__button--dislike')).toBe(true)
+    expect(like.getAttribute('aria-pressed')).toBe('false')
+    expect(dislike.getAttribute('aria-pressed')).toBe('false')
+
+    fireEvent.click(like)
+    await waitFor(() => {
+      expect(like.getAttribute('aria-pressed')).toBe('true')
+      expect(dislike.getAttribute('aria-pressed')).toBe('false')
+    })
+
+    fireEvent.click(dislike)
+    await waitFor(() => {
+      expect(like.getAttribute('aria-pressed')).toBe('false')
+      expect(dislike.getAttribute('aria-pressed')).toBe('true')
+    })
+
+    fireEvent.click(dislike)
+    await waitFor(() => {
+      expect(dislike.getAttribute('aria-pressed')).toBe('false')
+    })
+  })
+
   it('notifies the parent when Like is selected or cleared', async () => {
     const result = renderFeedback()
     const like = result.getByRole('button', { name: 'Like' })
