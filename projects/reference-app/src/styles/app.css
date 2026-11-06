@@ -36,7 +36,10 @@ button:focus-visible {
 
 .app__title {
   font-size: 1.5rem;
+  font-weight: normal;
+  line-height: 1;
   margin: 0;
+  padding: 1rem 0;
 }
 
 .app__navigation {
@@ -46,6 +49,8 @@ button:focus-visible {
 
 .app__navigation-link {
   color: inherit;
+  font-size: 16px;
+  font-weight: 700;
   text-underline-offset: 0.2em;
 }
 
@@ -62,45 +67,4 @@ button:focus-visible {
 
 .app__section-title {
   margin-block: 0 var(--space-4);
-}
-
-.app__button {
-  background: transparent;
-  border: 0.0625rem solid currentColor;
-  border-radius: 0.375rem;
-  color: inherit;
-  cursor: pointer;
-  padding-block: 0.625rem;
-  padding-inline: var(--space-4);
-}
-
-.starter-feedback {
-  display: grid;
-  gap: var(--space-4);
-  margin-block-start: var(--space-8);
-}
-
-.starter-feedback__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
-.starter-feedback__button {
-  background: transparent;
-  border: 0.0625rem solid var(--color-border-subtle);
-  border-radius: 0.375rem;
-  color: inherit;
-  cursor: pointer;
-  padding-block: 0.625rem;
-  padding-inline: var(--space-4);
-}
-
-.starter-feedback__button[aria-pressed='true'] {
-  border-color: currentColor;
-  font-weight: 700;
-}
-
-.starter-feedback__status {
-  font-weight: 600;
 }
