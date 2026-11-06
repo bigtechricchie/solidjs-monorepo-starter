@@ -36,22 +36,43 @@ function StarterFeedback(props: StarterFeedbackProps) {
       <p>Try this interactive example powered by SolidJS signals.</p>
 
       <div class="starter-feedback__actions">
-        <button
-          aria-pressed={props.reaction === 'like' ? 'true' : 'false'}
-          class="starter-feedback__button"
-          onClick={() => toggleReaction('like')}
-          type="button"
-        >
-          Like
-        </button>
-        <button
-          aria-pressed={props.reaction === 'dislike' ? 'true' : 'false'}
-          class="starter-feedback__button"
-          onClick={() => toggleReaction('dislike')}
-          type="button"
-        >
-          Dislike
-        </button>
+        <span class="starter-feedback__action">
+          <button
+            aria-describedby="starter-feedback-like-tooltip"
+            aria-pressed={props.reaction === 'like' ? 'true' : 'false'}
+            class="starter-feedback__button"
+            onClick={() => toggleReaction('like')}
+            type="button"
+          >
+            Like
+          </button>
+          <span
+            class="starter-feedback__tooltip"
+            id="starter-feedback-like-tooltip"
+            role="tooltip"
+          >
+            Mark this starter as helpful
+          </span>
+        </span>
+
+        <span class="starter-feedback__action">
+          <button
+            aria-describedby="starter-feedback-dislike-tooltip"
+            aria-pressed={props.reaction === 'dislike' ? 'true' : 'false'}
+            class="starter-feedback__button"
+            onClick={() => toggleReaction('dislike')}
+            type="button"
+          >
+            Dislike
+          </button>
+          <span
+            class="starter-feedback__tooltip"
+            id="starter-feedback-dislike-tooltip"
+            role="tooltip"
+          >
+            Mark this starter as needing improvement
+          </span>
+        </span>
       </div>
 
       <p aria-live="polite" class="starter-feedback__status" role="status">
