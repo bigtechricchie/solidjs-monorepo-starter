@@ -1,4 +1,4 @@
-import { cleanup, render } from '@solidjs/testing-library'
+import { cleanup, fireEvent, render, waitFor } from '@solidjs/testing-library'
 import { afterEach, describe, expect, it } from 'vitest'
 
 import App from './App'
@@ -43,5 +43,29 @@ describe('App', () => {
     expect(
       result.queryByRole('button', { name: 'Increment count' }),
     ).toBeNull()
+  })
+
+  it('updates the parent-owned score when the reaction changes', async () => {
+    const result = render(() => <App />)
+    const score = result.getByRole('status', { name: 'Feedback score' })
+    const like = result.getByRole('button', { name: 'Like' })
+    const dislike = result.getByRole('button', { name: 'Dislike' })
+
+    expect(score.textContent).toBe('0')
+
+    fireEvent.click(like)
+    await waitFor(() => {
+      expect(score.textContent).toBe('1')
+    })
+
+    fireEvent.click(dislike)
+    await waitFor(() => {
+      expect(score.textContent).toBe('-1')
+    })
+
+    fireEvent.click(dislike)
+    await waitFor(() => {
+      expect(score.textContent).toBe('0')
+    })
   })
 })
