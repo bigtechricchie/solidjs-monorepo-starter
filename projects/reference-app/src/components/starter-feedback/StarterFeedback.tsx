@@ -11,7 +11,6 @@ const FEEDBACK_MESSAGES: Record<Reaction, string> = {
 }
 
 interface StarterFeedbackProps {
-  count: number
   onReactionChange: (reaction: Reaction | null) => void
   reaction: Reaction | null
 }
@@ -54,10 +53,6 @@ function StarterFeedback(props: StarterFeedbackProps) {
           Dislike
         </button>
       </div>
-
-      <p>
-        Feedback score: <output aria-label="Feedback score">{props.count}</output>
-      </p>
 
       <p aria-live="polite" class="starter-feedback__status" role="status">
         {feedbackMessage()}
