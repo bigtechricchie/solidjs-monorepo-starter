@@ -57,7 +57,7 @@ function StarterFeedback(props: StarterFeedbackProps) {
           <button
             aria-describedby="starter-feedback-like-tooltip"
             aria-pressed={props.reaction === 'like' ? 'true' : 'false'}
-            class="starter-feedback__button"
+            class="starter-feedback__button starter-feedback__button--like"
             onBlur={() => setDismissedTooltip(null)}
             onClick={() => toggleReaction('like')}
             onKeyDown={(event) => handleTooltipKeyDown(event, 'like')}
@@ -85,7 +85,7 @@ function StarterFeedback(props: StarterFeedbackProps) {
           <button
             aria-describedby="starter-feedback-dislike-tooltip"
             aria-pressed={props.reaction === 'dislike' ? 'true' : 'false'}
-            class="starter-feedback__button"
+            class="starter-feedback__button starter-feedback__button--dislike"
             onBlur={() => setDismissedTooltip(null)}
             onClick={() => toggleReaction('dislike')}
             onKeyDown={(event) => handleTooltipKeyDown(event, 'dislike')}
