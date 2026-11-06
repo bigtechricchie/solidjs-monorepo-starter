@@ -15,11 +15,14 @@
 }
 
 .starter-feedback__button {
+  align-items: center;
   background: transparent;
   border: var(--border-width-thin) solid var(--color-border-subtle);
   border-radius: var(--radius-small);
   color: inherit;
   cursor: pointer;
+  display: inline-flex;
+  gap: var(--space-2);
   padding-block: 0.625rem;
   padding-inline: var(--space-4);
 }
@@ -29,30 +32,42 @@
   font-weight: var(--font-weight-bold);
 }
 
+.starter-feedback__icon {
+  block-size: 1.125rem;
+  flex: none;
+  inline-size: 1.125rem;
+}
+
+.starter-feedback__icon--dislike {
+  transform: rotate(180deg);
+}
+
 .starter-feedback__status {
   font-weight: var(--font-weight-semibold);
 }
 
 .starter-feedback__tooltip {
-  background: var(--color-on-surface);
-  border-radius: var(--radius-small);
-  color: var(--color-surface);
-  font-size: var(--text-base);
-  inset-block-end: calc(100% + var(--space-2));
-  inset-inline-start: 50%;
-  max-inline-size: 16rem;
-  padding: var(--space-2);
-  pointer-events: none;
+  inset-block-start: 100%;
+  inset-inline-start: 0;
+  max-inline-size: min(16rem, 80vw);
+  padding-block-start: var(--space-2);
   position: absolute;
-  text-align: center;
-  transform: translateX(-50%);
   visibility: hidden;
-  white-space: normal;
   width: max-content;
   z-index: 1;
 }
 
-.starter-feedback__action:hover .starter-feedback__tooltip,
-.starter-feedback__action:focus-within .starter-feedback__tooltip {
+.starter-feedback__tooltip-content {
+  background: var(--color-on-surface);
+  border-radius: var(--radius-small);
+  color: var(--color-surface);
+  display: block;
+  font-size: var(--text-base);
+  padding: var(--space-2);
+  text-align: center;
+}
+
+.starter-feedback__action:not([data-dismissed='true']):hover .starter-feedback__tooltip,
+.starter-feedback__action:not([data-dismissed='true']):focus-within .starter-feedback__tooltip {
   visibility: visible;
 }
