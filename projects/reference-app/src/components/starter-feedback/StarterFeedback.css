@@ -29,15 +29,15 @@
 }
 
 .starter-feedback__button--like[aria-pressed='true'] {
-  background: #166534;
-  border-color: #166534;
-  color: #ffffff;
+  background: #ecfdf3;
+  border-color: #a6f4c5;
+  color: #067647;
 }
 
 .starter-feedback__button--dislike[aria-pressed='true'] {
-  background: #b42318;
-  border-color: #b42318;
-  color: #ffffff;
+  background: #fef3f2;
+  border-color: #fecdca;
+  color: #b42318;
 }
 
 .starter-feedback__status {
