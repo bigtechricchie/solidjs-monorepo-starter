@@ -45,27 +45,30 @@ describe('App', () => {
     ).toBeNull()
   })
 
-  it('updates the parent-owned score when the reaction changes', async () => {
+  it('updates parent-owned reaction state through the feedback callback', async () => {
     const result = render(() => <App />)
-    const score = result.getByRole('status', { name: 'Feedback score' })
     const like = result.getByRole('button', { name: 'Like' })
     const dislike = result.getByRole('button', { name: 'Dislike' })
 
-    expect(score.textContent).toBe('0')
+    expect(like.getAttribute('aria-pressed')).toBe('false')
+    expect(dislike.getAttribute('aria-pressed')).toBe('false')
 
     fireEvent.click(like)
     await waitFor(() => {
-      expect(score.textContent).toBe('1')
+      expect(like.getAttribute('aria-pressed')).toBe('true')
+      expect(dislike.getAttribute('aria-pressed')).toBe('false')
     })
 
     fireEvent.click(dislike)
     await waitFor(() => {
-      expect(score.textContent).toBe('-1')
+      expect(like.getAttribute('aria-pressed')).toBe('false')
+      expect(dislike.getAttribute('aria-pressed')).toBe('true')
     })
 
     fireEvent.click(dislike)
     await waitFor(() => {
-      expect(score.textContent).toBe('0')
+      expect(like.getAttribute('aria-pressed')).toBe('false')
+      expect(dislike.getAttribute('aria-pressed')).toBe('false')
     })
   })
 })
