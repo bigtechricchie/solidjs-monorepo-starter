@@ -55,6 +55,6 @@
 }
 
 .starter-feedback__action:not([data-dismissed='true']):hover .starter-feedback__tooltip,
-.starter-feedback__action:not([data-dismissed='true']):has(.starter-feedback__button:focus-visible) .starter-feedback__tooltip {
+.starter-feedback__action:not([data-dismissed='true']) .starter-feedback__button:focus-visible + .starter-feedback__tooltip {
   visibility: visible;
 }
