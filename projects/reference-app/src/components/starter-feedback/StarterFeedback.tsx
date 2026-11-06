@@ -100,7 +100,7 @@ function StarterFeedback(props: StarterFeedbackProps) {
             class="starter-feedback__button"
             onBlur={() => setDismissedTooltip(null)}
             onClick={() => toggleReaction('dislike')}
-            onKeyDown={(event) => handleTooltipKeyDown(event, 'dislike')
+            onKeyDown={(event) => handleTooltipKeyDown(event, 'dislike')}
             type="button"
           >
             <svg
