@@ -49,13 +49,14 @@ describe('StarterFeedback', () => {
     expect(dislikeTooltip.getAttribute('role')).toBe('tooltip')
   })
 
-  it('keeps icon decoration out of each button name', () => {
+  it('uses text-only buttons without inline SVGs', () => {
     const result = renderFeedback()
     const like = result.getByRole('button', { name: 'Like' })
     const dislike = result.getByRole('button', { name: 'Dislike' })
 
-    expect(like.querySelector('svg')?.getAttribute('aria-hidden')).toBe('true')
-    expect(dislike.querySelector('svg')?.getAttribute('aria-hidden')).toBe('true')
+    expect(like.textContent?.trim()).toBe('Like')
+    expect(dislike.textContent?.trim()).toBe('Dislike')
+    expect(result.container.querySelector('svg')).toBeNull()
   })
 
   it('dismisses a tooltip with Escape and resets on pointer exit', async () => {
