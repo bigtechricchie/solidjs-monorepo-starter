@@ -1,6 +1,23 @@
-import StarterFeedback from './components/StarterFeedback'
+import { createSignal } from 'solid-js'
+
+import StarterFeedback, {
+  type Reaction,
+} from './components/starter-feedback/StarterFeedback'
 
 function App() {
+  const [reaction, setReaction] = createSignal<Reaction | null>(null)
+
+  const count = () => {
+    switch (reaction()) {
+      case 'like':
+        return 1
+      case 'dislike':
+        return -1
+      default:
+        return 0
+    }
+  }
+
   return (
     <div class="app">
       <header class="app__header">
@@ -18,7 +35,11 @@ function App() {
       <main class="app__main">
         <section class="app__content" id="reference-example">
           <h2 class="app__section-title">Reference application</h2>
-          <StarterFeedback />
+          <StarterFeedback
+            count={count()}
+            onReactionChange={setReaction}
+            reaction={reaction()}
+          />
         </section>
       </main>
     </div>
