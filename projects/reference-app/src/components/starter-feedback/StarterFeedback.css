@@ -25,8 +25,19 @@
 }
 
 .starter-feedback__button[aria-pressed='true'] {
-  border-color: currentColor;
   font-weight: var(--font-weight-bold);
+}
+
+.starter-feedback__button--like[aria-pressed='true'] {
+  background: #166534;
+  border-color: #166534;
+  color: #ffffff;
+}
+
+.starter-feedback__button--dislike[aria-pressed='true'] {
+  background: #b42318;
+  border-color: #b42318;
+  color: #ffffff;
 }
 
 .starter-feedback__status {
