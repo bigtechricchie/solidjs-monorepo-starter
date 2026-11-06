@@ -44,14 +44,15 @@ function StarterFeedback(props: StarterFeedbackProps) {
 
   return (
     <section aria-labelledby="starter-feedback-title" class="starter-feedback">
-      <h2 id="starter-feedback-title">Do you like this starter?</h2>
+      <h3 id="starter-feedback-title">Do you like this starter?</h3>
       <p>Try this interactive example powered by SolidJS signals.</p>
 
       <div class="starter-feedback__actions">
         <span
           class="starter-feedback__action"
           data-dismissed={dismissedTooltip() === 'like' ? 'true' : 'false'}
-          onMouseLeave={() => setDismissedTooltip(null)}
+          onMouseEnter={() => setDismissedTooltip(null)}
+          onMouseLeave={() => setDismissedTooltip('like')}
         >
           <button
             aria-describedby="starter-feedback-like-tooltip"
@@ -78,7 +79,8 @@ function StarterFeedback(props: StarterFeedbackProps) {
         <span
           class="starter-feedback__action"
           data-dismissed={dismissedTooltip() === 'dislike' ? 'true' : 'false'}
-          onMouseLeave={() => setDismissedTooltip(null)}
+          onMouseEnter={() => setDismissedTooltip(null)}
+          onMouseLeave={() => setDismissedTooltip('dislike')}
         >
           <button
             aria-describedby="starter-feedback-dislike-tooltip"
