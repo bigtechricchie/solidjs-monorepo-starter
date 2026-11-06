@@ -4,6 +4,10 @@
   margin-block-start: var(--space-8);
 }
 
+.starter-feedback__action {
+  position: relative;
+}
+
 .starter-feedback__actions {
   display: flex;
   flex-wrap: wrap;
@@ -27,4 +31,28 @@
 
 .starter-feedback__status {
   font-weight: var(--font-weight-semibold);
+}
+
+.starter-feedback__tooltip {
+  background: var(--color-on-surface);
+  border-radius: var(--radius-small);
+  color: var(--color-surface);
+  font-size: var(--text-base);
+  inset-block-end: calc(100% + var(--space-2));
+  inset-inline-start: 50%;
+  max-inline-size: 16rem;
+  padding: var(--space-2);
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  transform: translateX(-50%);
+  visibility: hidden;
+  white-space: normal;
+  width: max-content;
+  z-index: 1;
+}
+
+.starter-feedback__action:hover .starter-feedback__tooltip,
+.starter-feedback__action:focus-within .starter-feedback__tooltip {
+  visibility: visible;
 }
