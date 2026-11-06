@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, waitFor } from '@solidjs/testing-library'
+import { cleanup, render } from '@solidjs/testing-library'
 import { afterEach, describe, expect, it } from 'vitest'
 
 import App from './App'
@@ -8,7 +8,7 @@ afterEach(() => {
 })
 
 describe('App', () => {
-  it('renders the reference application content', () => {
+  it('renders the reference application shell and starter feedback', () => {
     const result = render(() => <App />)
 
     expect(
@@ -32,25 +32,16 @@ describe('App', () => {
     ).toBeDefined()
 
     expect(result.getByRole('main')).toBeDefined()
-  })
 
-  it('updates the count when the button is activated', async () => {
-    const result = render(() => <App />)
-    const incrementButton = result.getByRole('button', {
-      name: 'Increment count',
-    })
-    const count = result.getByRole('status')
-
-    expect(count.textContent).toBe('0')
-
-    fireEvent.click(incrementButton)
-    await waitFor(() => {
-      expect(count.textContent).toBe('1')
-    })
-
-    fireEvent.click(incrementButton)
-    await waitFor(() => {
-      expect(count.textContent).toBe('2')
-    })
+    expect(
+      result.getByRole('heading', {
+        name: 'Do you like this starter?',
+      }),
+    ).toBeDefined()
+    expect(result.getByRole('button', { name: 'Like' })).toBeDefined()
+    expect(result.getByRole('button', { name: 'Dislike' })).toBeDefined()
+    expect(
+      result.queryByRole('button', { name: 'Increment count' }),
+    ).toBeNull()
   })
 })
