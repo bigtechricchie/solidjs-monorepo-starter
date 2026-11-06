@@ -8,7 +8,7 @@ afterEach(() => {
 })
 
 describe('App', () => {
-  it('renders the reference application content', () => {
+  it('renders the reference application shell and starter feedback', () => {
     const result = render(() => <App />)
 
     expect(
@@ -32,25 +32,43 @@ describe('App', () => {
     ).toBeDefined()
 
     expect(result.getByRole('main')).toBeDefined()
+
+    expect(
+      result.getByRole('heading', {
+        name: 'Do you like this starter?',
+      }),
+    ).toBeDefined()
+    expect(result.getByRole('button', { name: 'Like' })).toBeDefined()
+    expect(result.getByRole('button', { name: 'Dislike' })).toBeDefined()
+    expect(
+      result.queryByRole('button', { name: 'Increment count' }),
+    ).toBeNull()
   })
 
-  it('updates the count when the button is activated', async () => {
+  it('updates parent-owned reaction state through the feedback callback', async () => {
     const result = render(() => <App />)
-    const incrementButton = result.getByRole('button', {
-      name: 'Increment count',
-    })
-    const count = result.getByRole('status')
+    const like = result.getByRole('button', { name: 'Like' })
+    const dislike = result.getByRole('button', { name: 'Dislike' })
 
-    expect(count.textContent).toBe('0')
+    expect(like.getAttribute('aria-pressed')).toBe('false')
+    expect(dislike.getAttribute('aria-pressed')).toBe('false')
 
-    fireEvent.click(incrementButton)
+    fireEvent.click(like)
     await waitFor(() => {
-      expect(count.textContent).toBe('1')
+      expect(like.getAttribute('aria-pressed')).toBe('true')
+      expect(dislike.getAttribute('aria-pressed')).toBe('false')
     })
 
-    fireEvent.click(incrementButton)
+    fireEvent.click(dislike)
     await waitFor(() => {
-      expect(count.textContent).toBe('2')
+      expect(like.getAttribute('aria-pressed')).toBe('false')
+      expect(dislike.getAttribute('aria-pressed')).toBe('true')
+    })
+
+    fireEvent.click(dislike)
+    await waitFor(() => {
+      expect(like.getAttribute('aria-pressed')).toBe('false')
+      expect(dislike.getAttribute('aria-pressed')).toBe('false')
     })
   })
 })
