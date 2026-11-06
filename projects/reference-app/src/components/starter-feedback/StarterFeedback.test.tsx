@@ -24,7 +24,7 @@ describe('StarterFeedback', () => {
     const result = renderFeedback()
 
     expect(
-      result.getByRole('heading', { name: 'Do you like this starter?' }),
+      result.getByRole('heading', { level: 3, name: 'Do you like this starter?' }),
     ).toBeDefined()
     expect(result.getByRole('status', { name: '' }).textContent).toBe(
       'Choose a reaction to try this interactive example.',
@@ -59,7 +59,7 @@ describe('StarterFeedback', () => {
     expect(result.container.querySelector('svg')).toBeNull()
   })
 
-  it('dismisses a tooltip with Escape and resets on pointer exit', async () => {
+  it('dismisses tooltips after click and pointer exit, and resets on re-entry', async () => {
     const result = renderFeedback()
     const like = result.getByRole('button', { name: 'Like' })
     const wrapper = like.parentElement
@@ -70,12 +70,28 @@ describe('StarterFeedback', () => {
 
     expect(wrapper.getAttribute('data-dismissed')).toBe('false')
 
+    fireEvent.mouseEnter(wrapper)
+    fireEvent.click(like)
+    fireEvent.mouseLeave(wrapper)
+
+    await waitFor(() => {
+      expect(wrapper.getAttribute('data-dismissed')).toBe('true')
+    })
+
+    fireEvent.mouseEnter(wrapper)
+    await waitFor(() => {
+      expect(wrapper.getAttribute('data-dismissed')).toBe('false')
+    })
+
     fireEvent.keyDown(like, { key: 'Escape' })
     await waitFor(() => {
       expect(wrapper.getAttribute('data-dismissed')).toBe('true')
     })
 
     fireEvent.mouseLeave(wrapper)
+    expect(wrapper.getAttribute('data-dismissed')).toBe('true')
+
+    fireEvent.mouseEnter(wrapper)
     await waitFor(() => {
       expect(wrapper.getAttribute('data-dismissed')).toBe('false')
     })
