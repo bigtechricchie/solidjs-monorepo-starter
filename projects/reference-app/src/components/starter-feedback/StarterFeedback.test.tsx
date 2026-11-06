@@ -49,6 +49,37 @@ describe('StarterFeedback', () => {
     expect(dislikeTooltip.getAttribute('role')).toBe('tooltip')
   })
 
+  it('keeps icon decoration out of each button name', () => {
+    const result = renderFeedback()
+    const like = result.getByRole('button', { name: 'Like' })
+    const dislike = result.getByRole('button', { name: 'Dislike' })
+
+    expect(like.querySelector('svg')?.getAttribute('aria-hidden')).toBe('true')
+    expect(dislike.querySelector('svg')?.getAttribute('aria-hidden')).toBe('true')
+  })
+
+  it('dismisses a tooltip with Escape and resets on pointer exit', async () => {
+    const result = renderFeedback()
+    const like = result.getByRole('button', { name: 'Like' })
+    const wrapper = like.parentElement
+
+    if (wrapper === null) {
+      throw new Error('Expected tooltip wrapper')
+    }
+
+    expect(wrapper.getAttribute('data-dismissed')).toBe('false')
+
+    fireEvent.keyDown(like, { key: 'Escape' })
+    await waitFor(() => {
+      expect(wrapper.getAttribute('data-dismissed')).toBe('true')
+    })
+
+    fireEvent.mouseLeave(wrapper)
+    await waitFor(() => {
+      expect(wrapper.getAttribute('data-dismissed')).toBe('false')
+    })
+  })
+
   it('notifies the parent when Like is selected or cleared', async () => {
     const result = renderFeedback()
     const like = result.getByRole('button', { name: 'Like' })
