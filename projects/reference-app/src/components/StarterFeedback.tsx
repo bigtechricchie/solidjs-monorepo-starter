@@ -29,7 +29,7 @@ function StarterFeedback() {
 
       <div class="starter-feedback__actions">
         <button
-          aria-pressed={reaction() === 'like'}
+          aria-pressed={reaction() === 'like' ? 'true' : 'false'}
           class="starter-feedback__button"
           onClick={() => toggleReaction('like')}
           type="button"
@@ -37,7 +37,7 @@ function StarterFeedback() {
           Like
         </button>
         <button
-          aria-pressed={reaction() === 'dislike'}
+          aria-pressed={reaction() === 'dislike' ? 'true' : 'false'}
           class="starter-feedback__button"
           onClick={() => toggleReaction('dislike')}
           type="button"
