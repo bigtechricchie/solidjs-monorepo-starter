@@ -15,14 +15,11 @@
 }
 
 .starter-feedback__button {
-  align-items: center;
   background: transparent;
   border: var(--border-width-thin) solid var(--color-border-subtle);
   border-radius: var(--radius-small);
   color: inherit;
   cursor: pointer;
-  display: inline-flex;
-  gap: var(--space-2);
   padding-block: 0.625rem;
   padding-inline: var(--space-4);
 }
@@ -30,16 +27,6 @@
 .starter-feedback__button[aria-pressed='true'] {
   border-color: currentColor;
   font-weight: var(--font-weight-bold);
-}
-
-.starter-feedback__icon {
-  block-size: 1.125rem;
-  flex: none;
-  inline-size: 1.125rem;
-}
-
-.starter-feedback__icon--dislike {
-  transform: rotate(180deg);
 }
 
 .starter-feedback__status {
@@ -68,6 +55,6 @@
 }
 
 .starter-feedback__action:not([data-dismissed='true']):hover .starter-feedback__tooltip,
-.starter-feedback__action:not([data-dismissed='true']):focus-within .starter-feedback__tooltip {
+.starter-feedback__action:not([data-dismissed='true']):has(.starter-feedback__button:focus-visible) .starter-feedback__tooltip {
   visibility: visible;
 }
