@@ -34,6 +34,21 @@ describe('StarterFeedback', () => {
     expect(result.getByText(/not saved or submitted/)).toBeDefined()
   })
 
+  it('connects descriptive tooltips to both reaction buttons', () => {
+    const result = renderFeedback()
+    const like = result.getByRole('button', { name: 'Like' })
+    const dislike = result.getByRole('button', { name: 'Dislike' })
+    const likeTooltip = result.getByText('Mark this starter as helpful')
+    const dislikeTooltip = result.getByText(
+      'Mark this starter as needing improvement',
+    )
+
+    expect(like.getAttribute('aria-describedby')).toBe(likeTooltip.id)
+    expect(dislike.getAttribute('aria-describedby')).toBe(dislikeTooltip.id)
+    expect(likeTooltip.getAttribute('role')).toBe('tooltip')
+    expect(dislikeTooltip.getAttribute('role')).toBe('tooltip')
+  })
+
   it('notifies the parent when Like is selected or cleared', async () => {
     const result = renderFeedback()
     const like = result.getByRole('button', { name: 'Like' })
