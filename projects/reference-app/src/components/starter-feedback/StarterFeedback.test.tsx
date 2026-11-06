@@ -28,7 +28,7 @@ describe('StarterFeedback', () => {
     expect(
       result.getByRole('heading', { name: 'Do you like this starter?' }),
     ).toBeDefined()
-    expect(result.getByRole('status').textContent).toBe(
+    expect(result.getByRole('status', { name: '' }).textContent).toBe(
       'Choose a reaction to try this interactive example.',
     )
     expect(result.getByRole('status', { name: 'Feedback score' }).textContent).toBe('0')
