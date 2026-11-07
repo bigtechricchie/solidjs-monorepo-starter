@@ -18,5 +18,10 @@ describe('Security', () => {
     expect(result.getByText(/local loopback address/)).toBeDefined()
     expect(result.getByText(/not make this reference/)).toBeDefined()
     expect(result.getByText(/report suspected vulnerabilities privately/)).toBeDefined()
+    expect(
+      result.getByRole('link', { name: 'security decisions and limitations' }).getAttribute('href'),
+    ).toBe(
+      'https://github.com/bigtechricchie/solidjs-monorepo-starter/blob/main/docs/security-decisions.md',
+    )
   })
 })
