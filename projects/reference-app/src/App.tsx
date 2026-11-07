@@ -1,4 +1,4 @@
-import { A, Route, Router, type RouteSectionProps } from '@solidjs/router'
+import { Route, Router, type RouteSectionProps } from '@solidjs/router'
 
 import './App.css'
 import Home from './pages/home/Home'
@@ -12,9 +12,9 @@ function AppShell(props: RouteSectionProps) {
           <h1 class="app__title">SolidJS Monorepo Starter</h1>
 
           <nav aria-label="Reference application" class="app__navigation">
-            <A class="app__navigation-link" end href="/">
+            <a class="app__navigation-link" href="/">
               Home
-            </A>
+            </a>
           </nav>
         </div>
       </header>
