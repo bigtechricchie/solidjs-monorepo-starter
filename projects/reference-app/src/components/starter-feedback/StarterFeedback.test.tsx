@@ -73,7 +73,9 @@ describe('StarterFeedback', () => {
     }
 
     fireEvent.mouseEnter(wrapper)
-    expect(wrapper.getAttribute('data-dismissed')).toBe('false')
+    await waitFor(() => {
+      expect(wrapper.getAttribute('data-dismissed')).toBe('false')
+    })
 
     fireEvent.keyDown(helpButton, { key: 'Escape' })
     await waitFor(() => {
@@ -81,10 +83,14 @@ describe('StarterFeedback', () => {
     })
 
     fireEvent.mouseEnter(wrapper)
-    expect(wrapper.getAttribute('data-dismissed')).toBe('false')
+    await waitFor(() => {
+      expect(wrapper.getAttribute('data-dismissed')).toBe('false')
+    })
 
     fireEvent.mouseLeave(wrapper)
-    expect(wrapper.getAttribute('data-dismissed')).toBe('true')
+    await waitFor(() => {
+      expect(wrapper.getAttribute('data-dismissed')).toBe('true')
+    })
   })
 
   it('uses text-only buttons without inline SVGs', () => {
