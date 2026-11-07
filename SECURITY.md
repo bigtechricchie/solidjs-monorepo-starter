@@ -10,7 +10,7 @@ Older commits, unmerged branches, copied starter applications and downstream for
 
 **Please do not disclose suspected vulnerabilities, exploit details, credentials or other sensitive evidence through public GitHub issues, pull requests or discussions.**
 
-Use [GitHub's private vulnerability reporting for this repository](https://github.com/bigtechricchie/solidjs-monorepo-starter/security/advisories/new) **if the feature is enabled**. GitHub requires the repository maintainer to enable private vulnerability reporting before that submission route is available. If the link does not offer a private reporting form, do not post the report publicly; check again after private reporting has been enabled.
+Use [GitHub's private vulnerability reporting for this repository](https://github.com/bigtechricchie/solidjs-monorepo-starter/security/advisories/new) to submit a confidential report. If the private reporting form is unavailable, do not disclose the vulnerability through a public issue, pull request or discussion. Wait until a private reporting channel is available.
 
 Include enough information for the maintainer to assess and reproduce the problem, where it is safe to do so:
 
@@ -24,7 +24,7 @@ Do not include production secrets, other people's private data, active credentia
 
 ## Review and coordinated disclosure
 
-The maintainer aims to acknowledge and assess reports, reproduce actionable findings, determine impact and scope, and prepare appropriate fixes or mitigations.
+The maintainer will assess actionable reports, determine impact and scope, and prepare appropriate fixes or mitigations where required.
 
 Response and remediation times depend on severity, reproducibility and maintainer availability. No fixed response-time guarantee or bug-bounty programme is offered.
 
