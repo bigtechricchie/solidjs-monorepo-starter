@@ -40,6 +40,7 @@ describe('App', () => {
     expect(result.getByRole('link', { name: 'Home' })).toBeDefined()
     expect(result.getByRole('link', { name: 'About' })).toBeDefined()
     expect(result.getByRole('link', { name: 'Author' })).toBeDefined()
+    expect(result.getByRole('link', { name: 'Contact' })).toBeDefined()
     expect(result.getByRole('link', { name: 'Security' })).toBeDefined()
 
     expect(
@@ -154,6 +155,36 @@ describe('App', () => {
         result.getByRole('heading', { level: 2, name: 'Author' }),
       ).toBeDefined()
       expect(window.location.pathname).toBe('/author')
+    })
+  })
+
+  it('renders Contact on a direct visit to /contact', () => {
+    window.history.replaceState(null, '', '/contact')
+
+    const result = render(() => <App />)
+
+    expect(
+      result.getByRole('heading', { level: 2, name: 'Contact' }),
+    ).toBeDefined()
+    expect(result.getByRole('link', { name: 'View project issues on GitHub' }).getAttribute('href')).toBe(
+      'https://github.com/bigtechricchie/solidjs-monorepo-starter/issues',
+    )
+    expect(result.getByRole('link', { name: 'Report a vulnerability privately' }).getAttribute('href')).toBe(
+      'https://github.com/bigtechricchie/solidjs-monorepo-starter/security/advisories/new',
+    )
+    expect(result.queryByRole('button', { name: 'Like' })).toBeNull()
+  })
+
+  it('navigates to Contact using the application navigation', async () => {
+    const result = render(() => <App />)
+
+    fireEvent.click(result.getByRole('link', { name: 'Contact' }))
+
+    await waitFor(() => {
+      expect(
+        result.getByRole('heading', { level: 2, name: 'Contact' }),
+      ).toBeDefined()
+      expect(window.location.pathname).toBe('/contact')
     })
   })
 
