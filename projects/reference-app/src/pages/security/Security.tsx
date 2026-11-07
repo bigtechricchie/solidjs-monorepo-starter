@@ -20,6 +20,13 @@ function Security() {
         described in the repository's security policy. Do not include
         credentials or sensitive information in public reports.
       </p>
+      <p>
+        Read our{' '}
+        <a href="https://github.com/bigtechricchie/solidjs-monorepo-starter/blob/main/docs/security-decisions.md">
+          security decisions and limitations
+        </a>
+        .
+      </p>
     </section>
   )
 }
