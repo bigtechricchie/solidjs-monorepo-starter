@@ -39,6 +39,7 @@ describe('App', () => {
     expect(result.getByRole('main')).toBeDefined()
     expect(result.getByRole('link', { name: 'Home' })).toBeDefined()
     expect(result.getByRole('link', { name: 'About' })).toBeDefined()
+    expect(result.getByRole('link', { name: 'Author' })).toBeDefined()
     expect(result.getByRole('link', { name: 'Security' })).toBeDefined()
 
     expect(
@@ -128,6 +129,31 @@ describe('App', () => {
         result.getByRole('heading', { level: 2, name: 'Security' }),
       ).toBeDefined()
       expect(window.location.pathname).toBe('/security')
+    })
+  })
+
+  it('renders Author on a direct visit to /author', () => {
+    window.history.replaceState(null, '', '/author')
+
+    const result = render(() => <App />)
+
+    expect(
+      result.getByRole('heading', { level: 2, name: 'Author' }),
+    ).toBeDefined()
+    expect(result.getByText(/built and maintained by Edward Siwek/)).toBeDefined()
+    expect(result.queryByRole('button', { name: 'Like' })).toBeNull()
+  })
+
+  it('navigates to Author using the application navigation', async () => {
+    const result = render(() => <App />)
+
+    fireEvent.click(result.getByRole('link', { name: 'Author' }))
+
+    await waitFor(() => {
+      expect(
+        result.getByRole('heading', { level: 2, name: 'Author' }),
+      ).toBeDefined()
+      expect(window.location.pathname).toBe('/author')
     })
   })
 
