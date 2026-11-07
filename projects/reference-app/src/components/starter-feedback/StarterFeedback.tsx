@@ -20,6 +20,12 @@ interface StarterFeedbackProps {
 function StarterFeedback(props: StarterFeedbackProps) {
   const [helpTooltipDismissed, setHelpTooltipDismissed] = createSignal(false)
 
+  function handleHelpTooltipKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      setHelpTooltipDismissed(true)
+    }
+  }
+
   function toggleReaction(nextReaction: Reaction) {
     props.onReactionChange(
       props.reaction === nextReaction ? null : nextReaction,
@@ -50,11 +56,7 @@ function StarterFeedback(props: StarterFeedbackProps) {
             class="starter-feedback__help-button"
             onBlur={() => setHelpTooltipDismissed(true)}
             onFocus={() => setHelpTooltipDismissed(false)}
-            onKeyDown={(event) => {
-              if (event.key === 'Escape') {
-                setHelpTooltipDismissed(true)
-              }
-            }}
+            onKeyDown={handleHelpTooltipKeyDown}
             type="button"
           >
             ?
@@ -65,8 +67,8 @@ function StarterFeedback(props: StarterFeedbackProps) {
             role="tooltip"
           >
             <span class="starter-feedback__tooltip-content">
-              This help tooltip demonstrates hover, keyboard focus, and Escape
-              dismissal.
+              This tooltip demonstrates accessible supplementary help on hover
+              and keyboard focus.
             </span>
           </span>
         </span>
