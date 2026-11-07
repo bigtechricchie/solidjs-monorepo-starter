@@ -73,7 +73,7 @@ Canonical `pnpm verify` builds a representative reactive TSX fixture with Node.j
 
 This verifies the tested native compilation path; it does **not** establish that Babel is absent from the installed dependency graph or that every development, server-rendering, custom-options, or reference-application build path avoids Babel. Reference-application verification is handled separately.
 
-A request for an officially supported Babel-free installation path is tracked upstream in [solidjs/solid-vite-plugin#531](https://github.com/solidjs/solid-vite-plugin/issues/531). Until such an integration is supported, do not force-remove the plugin's Babel dependencies with package-manager overrides.
+The native-only installation issue [#531](https://github.com/solidjs/solid-vite-plugin/issues/531) was addressed by upstream [PR #532](https://github.com/solidjs/solid-vite-plugin/pull/532), released in `@solidjs/vite-plugin@3.0.0-next.57`. With the repository's cleanly regenerated lockfile, `@babel/core` and `@solidjs/babel-plugin` are absent without dependency overrides; some Babel utility packages still remain through independent tooling.
 
 ## Local development server network binding
 
@@ -102,7 +102,6 @@ The repository currently uses:
 - strict engine enforcement;
 - a 72-hour dependency-release cooldown (`minimumReleaseAge: 4320`);
 - an explicit, exact-version exception for `@solidjs/vite-plugin@3.0.0-next.57` to adopt the upstream native-compiler dependency fix before the standard 72-hour cooldown; this exception must be removed when the release qualifies;
-- a temporary, version-specific cooldown exception for `@solidjs/vite-plugin@3.0.0-next.56`, to be reviewed and removed when no longer needed;
 - frozen-lockfile installation in CI;
 - explicit dependency permissions.
 
