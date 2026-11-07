@@ -46,7 +46,7 @@ The current SolidJS packages are:
 ```text
 solid-js               2.0.0-rc.19
 @solidjs/web            2.0.0-rc.19
-@solidjs/vite-plugin    3.0.0-next.56
+@solidjs/vite-plugin    3.0.0-next.57
 ```
 
 SolidJS 2 is currently being used deliberately because this repository requires the native Solid compiler rather than Babel as the application compiler.
@@ -65,11 +65,11 @@ solid({
 
 This selects the native SolidJS compiler for the repository's configured JSX and TSX compilation.
 
-The official Vite plugin still declares Babel packages as dependencies to support its alternative compiler backend. Consequently, `@babel/core` and `@solidjs/babel-plugin` remain installed transitively in this repository even when `compiler: 'native'` is selected. **Installed dependencies and modules actually loaded during a build are different properties.**
+The official Vite plugin now declares `@babel/core` and `@solidjs/babel-plugin` as optional peer dependencies instead of mandatory dependencies. The refreshed lockfile for `3.0.0-next.57` no longer includes those Babel compiler packages. Other `@babel/*` utility packages may remain through independent development dependencies, such as testing utilities. **The absence of Babel compiler packages is not the same as the absence of all Babel-named utility packages.**
 
 ### Native compiler verification and limitations
 
-Canonical `pnpm verify` builds a representative reactive TSX fixture with Node.js module-resolution hooks that reject recognised Babel imports. With the pinned plugin version, the fixture compiles successfully while this blocker is enabled. The same check runs in GitHub Actions.
+Canonical `pnpm verify` builds a representative reactive TSX fixture with Node.js module-resolution hooks that reject recognised Babel imports. With the pinned plugin version, the native compiler fixture is required to compile while this blocker is enabled. The same check runs in GitHub Actions.
 
 This verifies the tested native compilation path; it does **not** establish that Babel is absent from the installed dependency graph or that every development, server-rendering, custom-options, or reference-application build path avoids Babel. Reference-application verification is handled separately.
 
@@ -101,6 +101,7 @@ The repository currently uses:
 - a committed pnpm lockfile;
 - strict engine enforcement;
 - a 72-hour dependency-release cooldown (`minimumReleaseAge: 4320`);
+- an explicit, exact-version exception for `@solidjs/vite-plugin@3.0.0-next.57` to adopt the upstream native-compiler dependency fix before the standard 72-hour cooldown; this exception must be removed when the release qualifies;
 - a temporary, version-specific cooldown exception for `@solidjs/vite-plugin@3.0.0-next.56`, to be reviewed and removed when no longer needed;
 - frozen-lockfile installation in CI;
 - explicit dependency permissions.
