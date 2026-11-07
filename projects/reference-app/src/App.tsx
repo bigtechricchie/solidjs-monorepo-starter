@@ -3,6 +3,7 @@ import { createRouter, type RouteSectionProps } from '@solidjs/router'
 import './App.css'
 import About from './pages/about/About'
 import Author from './pages/author/Author'
+import Contact from './pages/contact/Contact'
 import Home from './pages/home/Home'
 import NotFound from './pages/not-found/NotFound'
 import Security from './pages/security/Security'
@@ -12,6 +13,7 @@ const Router = createRouter({
     { path: '/', component: Home },
     { path: '/about', component: About },
     { path: '/author', component: Author },
+    { path: '/contact', component: Contact },
     { path: '/security', component: Security },
     { path: '*404', component: NotFound },
   ],
@@ -33,6 +35,9 @@ function AppShell(props: RouteSectionProps) {
             </a>
             <a class="app__navigation-link" href="/author">
               Author
+            </a>
+            <a class="app__navigation-link" href="/contact">
+              Contact
             </a>
             <a class="app__navigation-link" href="/security">
               Security
