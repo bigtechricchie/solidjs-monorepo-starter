@@ -1,8 +1,15 @@
-import { Route, Router, type RouteSectionProps } from '@solidjs/router'
+import { createRouter, type RouteSectionProps } from '@solidjs/router'
 
 import './App.css'
 import Home from './pages/home/Home'
 import NotFound from './pages/not-found/NotFound'
+
+const Router = createRouter({
+  routes: [
+    { path: '/', component: Home },
+    { path: '*404', component: NotFound },
+  ],
+})
 
 function AppShell(props: RouteSectionProps) {
   return (
@@ -25,12 +32,7 @@ function AppShell(props: RouteSectionProps) {
 }
 
 function App() {
-  return (
-    <Router root={AppShell}>
-      <Route path="/" component={Home} />
-      <Route path="*" component={NotFound} />
-    </Router>
-  )
+  return <Router>{props => <AppShell {...props} />}</Router>
 }
 
 export default App
