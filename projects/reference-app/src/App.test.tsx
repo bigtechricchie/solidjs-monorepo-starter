@@ -41,7 +41,7 @@ describe('App', () => {
 
     expect(
       result.getByRole('heading', {
-        name: 'Do you like this starter?',
+        name: 'Do you like this starter',
       }),
     ).toBeDefined()
     expect(result.getByRole('button', { name: 'Like' })).toBeDefined()
