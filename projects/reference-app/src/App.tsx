@@ -1,12 +1,14 @@
 import { createRouter, type RouteSectionProps } from '@solidjs/router'
 
 import './App.css'
+import About from './pages/about/About'
 import Home from './pages/home/Home'
 import NotFound from './pages/not-found/NotFound'
 
 const Router = createRouter({
   routes: [
     { path: '/', component: Home },
+    { path: '/about', component: About },
     { path: '*404', component: NotFound },
   ],
 })
@@ -21,6 +23,9 @@ function AppShell(props: RouteSectionProps) {
           <nav aria-label="Reference application" class="app__navigation">
             <a class="app__navigation-link" href="/">
               Home
+            </a>
+            <a class="app__navigation-link" href="/about">
+              About
             </a>
           </nav>
         </div>
