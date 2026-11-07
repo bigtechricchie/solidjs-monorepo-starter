@@ -58,7 +58,7 @@ describe('StarterFeedback', () => {
     expect(helpButton.textContent?.trim()).toBe('?')
     expect(helpButton.getAttribute('aria-describedby')).toBe(tooltip.id)
     expect(tooltip.textContent).toContain(
-      'This help tooltip demonstrates hover, keyboard focus, and Escape dismissal.',
+      'This tooltip demonstrates accessible supplementary help on hover and keyboard focus.',
     )
     expect(result.getByText(/Click Like if you find this starter helpful/)).toBeDefined()
   })
