@@ -12,7 +12,7 @@ The repository is being designed around explicit ownership, minimal dependencies
 
 ## Current status
 
-The repository provides a reviewed frontend toolchain, a minimal SolidJS reference application, and repository-owned verification as a foundation for future SolidJS applications and Go services.
+The repository provides a reviewed frontend toolchain, a tested SolidJS reference application with an application shell and accessible interactive example, and repository-owned verification as a foundation for future SolidJS applications and Go services.
 
 The current baseline includes:
 
@@ -25,10 +25,10 @@ The current baseline includes:
 - a committed lockfile;
 - explicit denial of dependency-provided agent skills;
 - a canonical repository verification command with a Babel-blocked native TSX compiler fixture;
-- a minimal reference application in `projects/reference-app` with explicit development, build, and type-check scripts;
+- a reference application in `projects/reference-app` with an application shell, native CSS structure, accessible interactive feedback, component tests, and explicit development, build, test, and type-check scripts;
 - trusted GitHub Actions verification with SHA-pinned actions and minimal permissions.
 
-Further applications, reusable libraries, Go services, testing infrastructure, routing, state management, and other capabilities will be introduced only when their responsibilities are established and reviewed.
+Further applications, reusable libraries, Go services, routing, state management, and other capabilities will be introduced only when their responsibilities are established and reviewed.
 
 ## Toolchain baseline
 
@@ -125,7 +125,7 @@ The canonical repository verification command is:
 pnpm verify
 ```
 
-The command verifies the repository-owned Node.js and pnpm versions, confirms that Vite and TypeScript can be invoked from the installed dependency graph, builds a native SolidJS TSX fixture with recognised Babel module imports blocked, type-checks the reference application, and production-builds the reference application with the same Babel module-resolution blocker enabled.
+The command verifies the repository-owned Node.js and pnpm versions, confirms that Vite and TypeScript can be invoked from the installed dependency graph, builds a native SolidJS TSX fixture with recognised Babel module imports blocked, type-checks and tests the reference application, and production-builds the reference application with the same Babel module-resolution blocker enabled.
 
 The same verification entry point is used locally and by GitHub Actions.
 
@@ -148,10 +148,11 @@ The reference application also has separate development, build, and type-check c
 ```bash
 pnpm dev:reference-app
 pnpm build:reference-app
+pnpm test:reference-app
 pnpm typecheck:reference-app
 ```
 
-Canonical `pnpm verify` now invokes the reference application's type-check and performs its production build through repository-owned verification tooling. The verification build uses a temporary output directory and does not leave generated `dist/` content in the source tree.
+Canonical `pnpm verify` now invokes the reference application's type-check and tests, and performs its production build through repository-owned verification tooling. The verification build uses a temporary output directory and does not leave generated `dist/` content in the source tree.
 
 A successful verification confirms only that the checks currently implemented by the repository passed. It is not a security certification or proof that future application code is correct.
 
