@@ -18,13 +18,11 @@ interface StarterFeedbackProps {
 }
 
 function StarterFeedback(props: StarterFeedbackProps) {
-  const [dismissedTooltip, setDismissedTooltip] = createSignal<Reaction | null>(
-    null,
-  )
+  const [helpTooltipDismissed, setHelpTooltipDismissed] = createSignal(false)
 
-  function handleTooltipKeyDown(event: KeyboardEvent, reaction: Reaction) {
+  function handleHelpTooltipKeyDown(event: KeyboardEvent) {
     if (event.key === 'Escape') {
-      setDismissedTooltip(reaction)
+      setHelpTooltipDismissed(true)
     }
   }
 
@@ -44,65 +42,61 @@ function StarterFeedback(props: StarterFeedbackProps) {
 
   return (
     <section aria-labelledby="starter-feedback-title" class="starter-feedback">
-      <h3 id="starter-feedback-title">Do you like this starter?</h3>
-      <p>Try this interactive example powered by SolidJS signals.</p>
+      <div class="starter-feedback__heading">
+        <h3 id="starter-feedback-title">Do you like this starter?</h3>
+        <span
+          class="starter-feedback__help"
+          data-dismissed={helpTooltipDismissed() ? 'true' : 'false'}
+          onMouseEnter={() => setHelpTooltipDismissed(false)}
+          onMouseLeave={() => setHelpTooltipDismissed(true)}
+        >
+          <button
+            aria-describedby="starter-feedback-help-tooltip"
+            aria-label="About this demonstration"
+            class="starter-feedback__help-button"
+            onBlur={() => setHelpTooltipDismissed(true)}
+            onFocus={() => setHelpTooltipDismissed(false)}
+            onKeyDown={handleHelpTooltipKeyDown}
+            type="button"
+          >
+            ?
+          </button>
+          <span
+            class="starter-feedback__tooltip"
+            id="starter-feedback-help-tooltip"
+            role="tooltip"
+          >
+            <span class="starter-feedback__tooltip-content">
+              This tooltip demonstrates accessible supplementary help on hover
+              and keyboard focus.
+            </span>
+          </span>
+        </span>
+      </div>
+      <p id="starter-feedback-guidance">
+        Click Like if you find this starter helpful, or Dislike if you think it
+        needs improvement.
+      </p>
 
       <div class="starter-feedback__actions">
-        <span
-          class="starter-feedback__action"
-          data-dismissed={dismissedTooltip() === 'like' ? 'true' : 'false'}
-          onMouseEnter={() => setDismissedTooltip(null)}
-          onMouseLeave={() => setDismissedTooltip('like')}
+        <button
+          aria-describedby="starter-feedback-guidance"
+          aria-pressed={props.reaction === 'like' ? 'true' : 'false'}
+          class="starter-feedback__button starter-feedback__button--like"
+          onClick={() => toggleReaction('like')}
+          type="button"
         >
-          <button
-            aria-describedby="starter-feedback-like-tooltip"
-            aria-pressed={props.reaction === 'like' ? 'true' : 'false'}
-            class="starter-feedback__button starter-feedback__button--like"
-            onBlur={() => setDismissedTooltip(null)}
-            onClick={() => toggleReaction('like')}
-            onKeyDown={(event) => handleTooltipKeyDown(event, 'like')}
-            type="button"
-          >
-            Like
-          </button>
-          <span
-            class="starter-feedback__tooltip"
-            id="starter-feedback-like-tooltip"
-            role="tooltip"
-          >
-            <span class="starter-feedback__tooltip-content">
-              Mark this starter as helpful
-            </span>
-          </span>
-        </span>
-
-        <span
-          class="starter-feedback__action"
-          data-dismissed={dismissedTooltip() === 'dislike' ? 'true' : 'false'}
-          onMouseEnter={() => setDismissedTooltip(null)}
-          onMouseLeave={() => setDismissedTooltip('dislike')}
+          Like
+        </button>
+        <button
+          aria-describedby="starter-feedback-guidance"
+          aria-pressed={props.reaction === 'dislike' ? 'true' : 'false'}
+          class="starter-feedback__button starter-feedback__button--dislike"
+          onClick={() => toggleReaction('dislike')}
+          type="button"
         >
-          <button
-            aria-describedby="starter-feedback-dislike-tooltip"
-            aria-pressed={props.reaction === 'dislike' ? 'true' : 'false'}
-            class="starter-feedback__button starter-feedback__button--dislike"
-            onBlur={() => setDismissedTooltip(null)}
-            onClick={() => toggleReaction('dislike')}
-            onKeyDown={(event) => handleTooltipKeyDown(event, 'dislike')}
-            type="button"
-          >
-            Dislike
-          </button>
-          <span
-            class="starter-feedback__tooltip"
-            id="starter-feedback-dislike-tooltip"
-            role="tooltip"
-          >
-            <span class="starter-feedback__tooltip-content">
-              Mark this starter as needing improvement
-            </span>
-          </span>
-        </span>
+          Dislike
+        </button>
       </div>
 
       <p aria-live="polite" class="starter-feedback__status" role="status">
