@@ -34,19 +34,63 @@ describe('StarterFeedback', () => {
     expect(result.getByText(/not saved or submitted/)).toBeDefined()
   })
 
-  it('connects descriptive tooltips to both reaction buttons', () => {
+  it('shows guidance and associates it with both reactions', () => {
     const result = renderFeedback()
-    const like = result.getByRole('button', { name: 'Like' })
-    const dislike = result.getByRole('button', { name: 'Dislike' })
-    const likeTooltip = result.getByText('Mark this starter as helpful').parentElement
-    const dislikeTooltip = result.getByText(
-      'Mark this starter as needing improvement',
-    ).parentElement
+    const guidance = result.getByText(
+      'Click Like if you find this starter helpful, or Dislike if you think it needs improvement.',
+    )
 
-    expect(like.getAttribute('aria-describedby')).toBe(likeTooltip?.id)
-    expect(dislike.getAttribute('aria-describedby')).toBe(dislikeTooltip?.id)
-    expect(likeTooltip?.getAttribute('role')).toBe('tooltip')
-    expect(dislikeTooltip?.getAttribute('role')).toBe('tooltip')
+    expect(guidance.id).toBe('starter-feedback-guidance')
+    expect(
+      result.getByRole('button', { name: 'Like' }).getAttribute('aria-describedby'),
+    ).toBe(guidance.id)
+    expect(
+      result.getByRole('button', { name: 'Dislike' }).getAttribute('aria-describedby'),
+    ).toBe(guidance.id)
+    expect(result.container.querySelectorAll('[role="tooltip"]')).toHaveLength(1)
+  })
+
+  it('describes the help button with a demonstration tooltip', () => {
+    const result = renderFeedback()
+    const helpButton = result.getByRole('button', { name: 'About this demonstration' })
+    const tooltip = result.getByRole('tooltip')
+
+    expect(helpButton.textContent?.trim()).toBe('?')
+    expect(helpButton.getAttribute('aria-describedby')).toBe(tooltip.id)
+    expect(tooltip.textContent).toContain(
+      'This tooltip demonstrates accessible supplementary help on hover and keyboard focus.',
+    )
+    expect(result.getByText(/Click Like if you find this starter helpful/)).toBeDefined()
+  })
+
+  it('dismisses the help tooltip on Escape and pointer exit', async () => {
+    const result = renderFeedback()
+    const helpButton = result.getByRole('button', { name: 'About this demonstration' })
+    const wrapper = helpButton.parentElement
+
+    if (wrapper === null) {
+      throw new Error('Expected help tooltip wrapper')
+    }
+
+    fireEvent.mouseEnter(wrapper)
+    await waitFor(() => {
+      expect(wrapper.getAttribute('data-dismissed')).toBe('false')
+    })
+
+    fireEvent.keyDown(helpButton, { key: 'Escape' })
+    await waitFor(() => {
+      expect(wrapper.getAttribute('data-dismissed')).toBe('true')
+    })
+
+    fireEvent.mouseEnter(wrapper)
+    await waitFor(() => {
+      expect(wrapper.getAttribute('data-dismissed')).toBe('false')
+    })
+
+    fireEvent.mouseLeave(wrapper)
+    await waitFor(() => {
+      expect(wrapper.getAttribute('data-dismissed')).toBe('true')
+    })
   })
 
   it('uses text-only buttons without inline SVGs', () => {
@@ -57,44 +101,6 @@ describe('StarterFeedback', () => {
     expect(like.textContent?.trim()).toBe('Like')
     expect(dislike.textContent?.trim()).toBe('Dislike')
     expect(result.container.querySelector('svg')).toBeNull()
-  })
-
-  it('dismisses tooltips after click and pointer exit, and resets on re-entry', async () => {
-    const result = renderFeedback()
-    const like = result.getByRole('button', { name: 'Like' })
-    const wrapper = like.parentElement
-
-    if (wrapper === null) {
-      throw new Error('Expected tooltip wrapper')
-    }
-
-    expect(wrapper.getAttribute('data-dismissed')).toBe('false')
-
-    fireEvent.mouseEnter(wrapper)
-    fireEvent.click(like)
-    fireEvent.mouseLeave(wrapper)
-
-    await waitFor(() => {
-      expect(wrapper.getAttribute('data-dismissed')).toBe('true')
-    })
-
-    fireEvent.mouseEnter(wrapper)
-    await waitFor(() => {
-      expect(wrapper.getAttribute('data-dismissed')).toBe('false')
-    })
-
-    fireEvent.keyDown(like, { key: 'Escape' })
-    await waitFor(() => {
-      expect(wrapper.getAttribute('data-dismissed')).toBe('true')
-    })
-
-    fireEvent.mouseLeave(wrapper)
-    expect(wrapper.getAttribute('data-dismissed')).toBe('true')
-
-    fireEvent.mouseEnter(wrapper)
-    await waitFor(() => {
-      expect(wrapper.getAttribute('data-dismissed')).toBe('false')
-    })
   })
 
   it('styles only the selected reaction using distinct modifier classes', async () => {
