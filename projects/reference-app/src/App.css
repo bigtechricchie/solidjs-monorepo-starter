@@ -40,7 +40,8 @@
 }
 
 .app__navigation-link:hover,
-.app__navigation-link:focus-visible {
+.app__navigation-link:focus-visible,
+.app__navigation-link[aria-current='page'] {
   text-decoration: underline;
 }
 
