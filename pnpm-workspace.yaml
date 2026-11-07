@@ -8,9 +8,9 @@ minimumReleaseAge: 4320
 minimumReleaseAgeStrict: true
 minimumReleaseAgeIgnoreMissingTime: false
 
-# Temporary exception for native SolidJS compiler testing.
+# Temporary, exact-version exception for the reviewed native compiler dependency update.
 minimumReleaseAgeExclude:
-  - '@solidjs/vite-plugin@3.0.0-next.56'
+  - '@solidjs/vite-plugin@3.0.0-next.57'
 
 permissions:
   '@solidjs/web':

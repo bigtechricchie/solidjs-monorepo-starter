@@ -53,16 +53,16 @@ The workspace currently contains:
 
 ```yaml
 minimumReleaseAgeExclude:
-  - '@solidjs/vite-plugin@3.0.0-next.56'
+  - '@solidjs/vite-plugin@3.0.0-next.57'
 ```
 
-This narrow, exact-version exception was introduced for the reviewed SolidJS native-compiler investigation.
+This narrow, exact-version exception was explicitly approved to adopt the upstream Babel-optional native compiler fix in `3.0.0-next.57` before the normal 72-hour cooldown. It does not exempt other versions or packages.
 
 It must remain temporary.
 
 Removal condition:
 
-- remove the exception when the pinned version no longer requires bypassing the 72-hour policy, or when the repository moves to another reviewed plugin version;
+- remove the exception once the release passes the 72-hour cooldown (9 November 2026 at 18:42:39 UTC), or when the repository moves to another reviewed plugin version;
 - verify `pnpm install --frozen-lockfile` and trusted CI after removal;
 - do not broaden the exception to a package-wide wildcard without separate review.
 
@@ -131,36 +131,20 @@ solid({
 })
 ```
 
-The official Vite plugin still declares Babel-related packages as dependencies to support its alternative compiler path.
+The official plugin previously installed the Babel compiler packages even when `compiler: 'native'` was selected. Upstream [issue #531](https://github.com/solidjs/solid-vite-plugin/issues/531) was addressed by [PR #532](https://github.com/solidjs/solid-vite-plugin/pull/532), published in `@solidjs/vite-plugin@3.0.0-next.57`.
 
-Therefore:
+The plugin now declares `@babel/core` and `@solidjs/babel-plugin` as **optional peer dependencies**. The committed lockfile was regenerated from a clean dependency resolution using pinned pnpm 12.15.0, without overrides; neither Babel compiler package nor `@types/babel__core` is present in that lockfile.
 
-```text
-Babel packages installed
-does not mean
-Babel modules loaded by the tested native path
-```
+Some independently required `@babel/*` utilities remain (including `@babel/code-frame`, `@babel/helper-validator-identifier`, and `@babel/runtime`). Do not equate the removal of Babel compiler dependencies with an absence of all Babel-named packages.
 
 Canonical verification registers a Node.js module-resolution blocker and builds both:
 
 - a focused native-compiler fixture;
 - the actual reference application.
 
-Those tested builds pass while recognised Babel-related imports and resolved paths are rejected.
+Those tested builds pass while recognised Babel-related imports and resolved paths are rejected. This is a regression guard for the tested paths, **not** proof that every Vite development mode, SSR path, custom plugin or future dependency can never use Babel.
 
-This is a regression guard for the tested module-resolution paths.
-
-It does not establish that:
-
-- Babel is absent from the installed dependency graph;
-- every possible Vite mode avoids Babel;
-- every development, SSR, custom-plugin, or future tooling path can never load or execute Babel-related code.
-
-An upstream request for a supported native-only installation path is tracked in:
-
-https://github.com/solidjs/solid-vite-plugin/issues/531
-
-Until upstream supports such a packaging model, this repository does not force-remove the plugin's declared Babel dependencies.
+No package-manager overrides are used to forcibly remove Babel packages.
 
 ## Local development network binding
 
