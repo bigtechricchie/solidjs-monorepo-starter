@@ -34,19 +34,20 @@ describe('StarterFeedback', () => {
     expect(result.getByText(/not saved or submitted/)).toBeDefined()
   })
 
-  it('connects descriptive tooltips to both reaction buttons', () => {
+  it('shows guidance and associates it with both reactions', () => {
     const result = renderFeedback()
-    const like = result.getByRole('button', { name: 'Like' })
-    const dislike = result.getByRole('button', { name: 'Dislike' })
-    const likeTooltip = result.getByText('Mark this starter as helpful').parentElement
-    const dislikeTooltip = result.getByText(
-      'Mark this starter as needing improvement',
-    ).parentElement
+    const guidance = result.getByText(
+      'Click Like if you find this starter helpful, or Dislike if you think it needs improvement.',
+    )
 
-    expect(like.getAttribute('aria-describedby')).toBe(likeTooltip?.id)
-    expect(dislike.getAttribute('aria-describedby')).toBe(dislikeTooltip?.id)
-    expect(likeTooltip?.getAttribute('role')).toBe('tooltip')
-    expect(dislikeTooltip?.getAttribute('role')).toBe('tooltip')
+    expect(guidance.id).toBe('starter-feedback-guidance')
+    expect(
+      result.getByRole('button', { name: 'Like' }).getAttribute('aria-describedby'),
+    ).toBe(guidance.id)
+    expect(
+      result.getByRole('button', { name: 'Dislike' }).getAttribute('aria-describedby'),
+    ).toBe(guidance.id)
+    expect(result.container.querySelector('[role="tooltip"]')).toBeNull()
   })
 
   it('uses text-only buttons without inline SVGs', () => {
@@ -57,44 +58,6 @@ describe('StarterFeedback', () => {
     expect(like.textContent?.trim()).toBe('Like')
     expect(dislike.textContent?.trim()).toBe('Dislike')
     expect(result.container.querySelector('svg')).toBeNull()
-  })
-
-  it('dismisses tooltips after click and pointer exit, and resets on re-entry', async () => {
-    const result = renderFeedback()
-    const like = result.getByRole('button', { name: 'Like' })
-    const wrapper = like.parentElement
-
-    if (wrapper === null) {
-      throw new Error('Expected tooltip wrapper')
-    }
-
-    expect(wrapper.getAttribute('data-dismissed')).toBe('false')
-
-    fireEvent.mouseEnter(wrapper)
-    fireEvent.click(like)
-    fireEvent.mouseLeave(wrapper)
-
-    await waitFor(() => {
-      expect(wrapper.getAttribute('data-dismissed')).toBe('true')
-    })
-
-    fireEvent.mouseEnter(wrapper)
-    await waitFor(() => {
-      expect(wrapper.getAttribute('data-dismissed')).toBe('false')
-    })
-
-    fireEvent.keyDown(like, { key: 'Escape' })
-    await waitFor(() => {
-      expect(wrapper.getAttribute('data-dismissed')).toBe('true')
-    })
-
-    fireEvent.mouseLeave(wrapper)
-    expect(wrapper.getAttribute('data-dismissed')).toBe('true')
-
-    fireEvent.mouseEnter(wrapper)
-    await waitFor(() => {
-      expect(wrapper.getAttribute('data-dismissed')).toBe('false')
-    })
   })
 
   it('styles only the selected reaction using distinct modifier classes', async () => {
