@@ -36,6 +36,57 @@
   color: var(--color-negative-text);
 }
 
+.starter-feedback__heading {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.starter-feedback__help {
+  position: relative;
+}
+
+.starter-feedback__help-button {
+  align-items: center;
+  background-color: transparent;
+  border: var(--border-width-thin) solid var(--color-border-subtle);
+  border-radius: 50%;
+  color: inherit;
+  cursor: help;
+  display: inline-flex;
+  font-weight: var(--font-weight-bold);
+  justify-content: center;
+  min-block-size: 2rem;
+  min-inline-size: 2rem;
+  padding: 0;
+}
+
 .starter-feedback__status {
   font-weight: var(--font-weight-semibold);
+}
+
+.starter-feedback__tooltip {
+  inline-size: max-content;
+  inset-block-start: 100%;
+  inset-inline-start: 0;
+  max-inline-size: min(18rem, 80vw);
+  padding-block-start: var(--space-2);
+  position: absolute;
+  visibility: hidden;
+  z-index: 1;
+}
+
+.starter-feedback__tooltip-content {
+  background-color: var(--color-on-surface);
+  border-radius: var(--radius-small);
+  color: var(--color-surface);
+  display: block;
+  font-size: var(--text-base);
+  padding: var(--space-2);
+}
+
+.starter-feedback__help:not([data-dismissed='true']):hover .starter-feedback__tooltip,
+.starter-feedback__help:not([data-dismissed='true']) .starter-feedback__help-button:focus-visible + .starter-feedback__tooltip {
+  visibility: visible;
 }
