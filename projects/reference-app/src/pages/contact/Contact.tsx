@@ -3,12 +3,22 @@ function Contact() {
     <section class="app__content">
       <h2 class="app__section-title">Contact</h2>
       <p>
-        For general questions about SolidJS Monorepo Starter, please use the
-        project's GitHub repository.
+        For general questions about SolidJS Monorepo Starter, please contact
+        Edward through the project's GitHub repository.
       </p>
       <p>
         <a href="https://github.com/bigtechricchie/solidjs-monorepo-starter/issues">
           View project issues on GitHub
+        </a>
+      </p>
+      <p>
+        Edward is also open to freelance and contract opportunities. For work
+        enquiries or collaboration on other projects, visit his GitHub profile
+        for more information.
+      </p>
+      <p>
+        <a href="https://github.com/bigtechricchie">
+          View Edward's GitHub profile
         </a>
       </p>
       <p>
