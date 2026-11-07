@@ -192,6 +192,7 @@ A successful `pnpm verify` currently demonstrates that the repository-owned chec
 - TypeScript availability;
 - native Solid compiler fixture build with recognised Babel imports blocked;
 - reference-application strict type-check;
+- reference-application component tests;
 - reference-application production build with recognised Babel imports blocked.
 
 Passing verification does not prove:

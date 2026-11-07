@@ -20,6 +20,5 @@
     "jsx": "preserve",
     "jsxImportSource": "@solidjs/web",
     "noEmit": true
-  },
-  "files": []
+  }
 }
