@@ -4,11 +4,13 @@ import './App.css'
 import About from './pages/about/About'
 import Home from './pages/home/Home'
 import NotFound from './pages/not-found/NotFound'
+import Security from './pages/security/Security'
 
 const Router = createRouter({
   routes: [
     { path: '/', component: Home },
     { path: '/about', component: About },
+    { path: '/security', component: Security },
     { path: '*404', component: NotFound },
   ],
 })
@@ -26,6 +28,9 @@ function AppShell(props: RouteSectionProps) {
             </a>
             <a class="app__navigation-link" href="/about">
               About
+            </a>
+            <a class="app__navigation-link" href="/security">
+              Security
             </a>
           </nav>
         </div>
