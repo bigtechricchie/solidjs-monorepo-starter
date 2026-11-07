@@ -20,6 +20,7 @@ jobs:
         run: npm install --global pnpm@12.15.0
       - name: Regenerate reviewed dependency lockfile
         run: |
+          rm pnpm-lock.yaml
           pnpm install --lockfile-only --no-frozen-lockfile
           echo '__LOCKFILE_BEGIN__'
           cat pnpm-lock.yaml
