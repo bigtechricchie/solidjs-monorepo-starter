@@ -47,7 +47,44 @@ describe('StarterFeedback', () => {
     expect(
       result.getByRole('button', { name: 'Dislike' }).getAttribute('aria-describedby'),
     ).toBe(guidance.id)
-    expect(result.container.querySelector('[role="tooltip"]')).toBeNull()
+    expect(result.container.querySelectorAll('[role="tooltip"]')).toHaveLength(1)
+  })
+
+  it('describes the help button with a demonstration tooltip', () => {
+    const result = renderFeedback()
+    const helpButton = result.getByRole('button', { name: 'About this demonstration' })
+    const tooltip = result.getByRole('tooltip')
+
+    expect(helpButton.textContent?.trim()).toBe('?')
+    expect(helpButton.getAttribute('aria-describedby')).toBe(tooltip.id)
+    expect(tooltip.textContent).toContain(
+      'This help tooltip demonstrates hover, keyboard focus, and Escape dismissal.',
+    )
+    expect(result.getByText(/Click Like if you find this starter helpful/)).toBeDefined()
+  })
+
+  it('dismisses the help tooltip on Escape and pointer exit', async () => {
+    const result = renderFeedback()
+    const helpButton = result.getByRole('button', { name: 'About this demonstration' })
+    const wrapper = helpButton.parentElement
+
+    if (wrapper === null) {
+      throw new Error('Expected help tooltip wrapper')
+    }
+
+    fireEvent.mouseEnter(wrapper)
+    expect(wrapper.getAttribute('data-dismissed')).toBe('false')
+
+    fireEvent.keyDown(helpButton, { key: 'Escape' })
+    await waitFor(() => {
+      expect(wrapper.getAttribute('data-dismissed')).toBe('true')
+    })
+
+    fireEvent.mouseEnter(wrapper)
+    expect(wrapper.getAttribute('data-dismissed')).toBe('false')
+
+    fireEvent.mouseLeave(wrapper)
+    expect(wrapper.getAttribute('data-dismissed')).toBe('true')
   })
 
   it('uses text-only buttons without inline SVGs', () => {
