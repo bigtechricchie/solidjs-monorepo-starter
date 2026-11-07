@@ -15,6 +15,9 @@
   --content-width: 48rem;
   --page-width: 72rem;
 
+  --focus-offset: 0.1875rem;
+  --focus-width: 0.1875rem;
+
   --font-sans:
     system-ui,
     -apple-system,

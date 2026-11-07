@@ -1,0 +1,15 @@
+html {
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  font-family: var(--font-sans);
+}
+
+a,
+button {
+  outline-offset: var(--focus-offset);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: var(--focus-width) solid var(--color-focus);
+}
