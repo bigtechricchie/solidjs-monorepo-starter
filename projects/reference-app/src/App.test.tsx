@@ -39,6 +39,7 @@ describe('App', () => {
     expect(result.getByRole('main')).toBeDefined()
     expect(result.getByRole('link', { name: 'Home' })).toBeDefined()
     expect(result.getByRole('link', { name: 'About' })).toBeDefined()
+    expect(result.getByRole('link', { name: 'Security' })).toBeDefined()
 
     expect(
       result.getByRole('heading', {
@@ -102,6 +103,31 @@ describe('App', () => {
         result.getByRole('heading', { level: 2, name: 'About this starter' }),
       ).toBeDefined()
       expect(window.location.pathname).toBe('/about')
+    })
+  })
+
+  it('renders Security on a direct visit to /security', () => {
+    window.history.replaceState(null, '', '/security')
+
+    const result = render(() => <App />)
+
+    expect(
+      result.getByRole('heading', { level: 2, name: 'Security' }),
+    ).toBeDefined()
+    expect(result.getByText(/security-certified or production-hardened/)).toBeDefined()
+    expect(result.queryByRole('button', { name: 'Like' })).toBeNull()
+  })
+
+  it('navigates to Security using the application navigation', async () => {
+    const result = render(() => <App />)
+
+    fireEvent.click(result.getByRole('link', { name: 'Security' }))
+
+    await waitFor(() => {
+      expect(
+        result.getByRole('heading', { level: 2, name: 'Security' }),
+      ).toBeDefined()
+      expect(window.location.pathname).toBe('/security')
     })
   })
 
