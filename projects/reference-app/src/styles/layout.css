@@ -1,0 +1,4 @@
+.layout-container {
+  inline-size: min(100% - var(--space-8), var(--page-width));
+  margin-inline: auto;
+}

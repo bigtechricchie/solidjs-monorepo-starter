@@ -1,5 +1,6 @@
 import { createSignal } from 'solid-js'
 
+import './App.css'
 import StarterFeedback, {
   type Reaction,
 } from './components/starter-feedback/StarterFeedback'
@@ -10,7 +11,7 @@ function App() {
   return (
     <div class="app">
       <header class="app__header">
-        <div class="app__header-inner">
+        <div class="app__header-inner layout-container">
           <h1 class="app__title">SolidJS Monorepo Starter</h1>
 
           <nav aria-label="Reference application" class="app__navigation">
@@ -21,7 +22,7 @@ function App() {
         </div>
       </header>
 
-      <main class="app__main">
+      <main class="app__main layout-container">
         <section class="app__content" id="reference-example">
           <h2 class="app__section-title">Reference application</h2>
           <StarterFeedback
