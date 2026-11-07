@@ -33,7 +33,7 @@
   color: inherit;
   font-size: var(--text-base);
   font-weight: var(--font-weight-bold);
-  text-underline-offset: 0.2em;
+  text-underline-offset: var(--underline-offset-navigation);
 }
 
 .app__main {
