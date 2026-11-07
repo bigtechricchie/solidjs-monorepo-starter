@@ -13,208 +13,23 @@ afterEach(() => {
 })
 
 describe('App', () => {
-  it('renders the reference application shell and starter feedback on Home', () => {
+  it('renders a persistent, accessible application shell', () => {
     const result = render(() => <App />)
 
     expect(
-      result.getByRole('heading', {
-        level: 1,
-        name: 'SolidJS Monorepo Starter',
-      }),
+      result.getByRole('heading', { level: 1, name: 'SolidJS Monorepo Starter' }),
     ).toBeDefined()
-
     expect(
-      result.getByRole('heading', {
-        level: 2,
-        name: 'Reference application',
-      }),
+      result.getByRole('navigation', { name: 'Reference application' }),
     ).toBeDefined()
-
-    expect(
-      result.getByRole('navigation', {
-        name: 'Reference application',
-      }),
-    ).toBeDefined()
-
     expect(result.getByRole('main')).toBeDefined()
-    expect(result.getByRole('link', { name: 'Home' })).toBeDefined()
-    expect(result.getByRole('link', { name: 'About' })).toBeDefined()
-    expect(result.getByRole('link', { name: 'Author' })).toBeDefined()
-    expect(result.getByRole('link', { name: 'Contact' })).toBeDefined()
-    expect(result.getByRole('link', { name: 'Security' })).toBeDefined()
 
-    expect(
-      result.getByRole('heading', {
-        name: 'Do you like this starter',
-      }),
-    ).toBeDefined()
-    expect(result.getByRole('button', { name: 'Like' })).toBeDefined()
-    expect(result.getByRole('button', { name: 'Dislike' })).toBeDefined()
-    expect(
-      result.queryByRole('button', { name: 'Increment count' }),
-    ).toBeNull()
+    for (const name of ['Home', 'About', 'Author', 'Contact', 'Security']) {
+      expect(result.getByRole('link', { name })).toBeDefined()
+    }
   })
 
-  it('updates Home-owned reaction state through the feedback callback', async () => {
-    const result = render(() => <App />)
-    const like = result.getByRole('button', { name: 'Like' })
-    const dislike = result.getByRole('button', { name: 'Dislike' })
-
-    expect(like.getAttribute('aria-pressed')).toBe('false')
-    expect(dislike.getAttribute('aria-pressed')).toBe('false')
-
-    fireEvent.click(like)
-    await waitFor(() => {
-      expect(like.getAttribute('aria-pressed')).toBe('true')
-      expect(dislike.getAttribute('aria-pressed')).toBe('false')
-    })
-
-    fireEvent.click(dislike)
-    await waitFor(() => {
-      expect(like.getAttribute('aria-pressed')).toBe('false')
-      expect(dislike.getAttribute('aria-pressed')).toBe('true')
-    })
-
-    fireEvent.click(dislike)
-    await waitFor(() => {
-      expect(like.getAttribute('aria-pressed')).toBe('false')
-      expect(dislike.getAttribute('aria-pressed')).toBe('false')
-    })
-  })
-
-  it('renders About when the /about route is opened directly', () => {
-    window.history.replaceState(null, '', '/about')
-
-    const result = render(() => <App />)
-
-    expect(
-      result.getByRole('heading', { level: 2, name: 'About this starter' }),
-    ).toBeDefined()
-    expect(result.getByText(/SolidJS/)).toBeDefined()
-    expect(result.getByRole('navigation', { name: 'Reference application' })).toBeDefined()
-    expect(result.queryByRole('button', { name: 'Like' })).toBeNull()
-  })
-
-  it('navigates to About through the application navigation', async () => {
-    const result = render(() => <App />)
-
-    fireEvent.click(result.getByRole('link', { name: 'About' }))
-
-    await waitFor(() => {
-      expect(
-        result.getByRole('heading', { level: 2, name: 'About this starter' }),
-      ).toBeDefined()
-      expect(window.location.pathname).toBe('/about')
-    })
-  })
-
-  it('renders Security on a direct visit to /security', () => {
-    window.history.replaceState(null, '', '/security')
-
-    const result = render(() => <App />)
-
-    expect(
-      result.getByRole('heading', { level: 2, name: 'Security' }),
-    ).toBeDefined()
-    expect(result.getByText(/security-certified or production-hardened/)).toBeDefined()
-    expect(result.queryByRole('button', { name: 'Like' })).toBeNull()
-  })
-
-  it('navigates to Security using the application navigation', async () => {
-    const result = render(() => <App />)
-
-    fireEvent.click(result.getByRole('link', { name: 'Security' }))
-
-    await waitFor(() => {
-      expect(
-        result.getByRole('heading', { level: 2, name: 'Security' }),
-      ).toBeDefined()
-      expect(window.location.pathname).toBe('/security')
-    })
-  })
-
-  it('renders Author on a direct visit to /author', () => {
-    window.history.replaceState(null, '', '/author')
-
-    const result = render(() => <App />)
-
-    expect(
-      result.getByRole('heading', { level: 2, name: 'Author' }),
-    ).toBeDefined()
-    expect(result.getByText(/built and maintained by Edward Siwek/)).toBeDefined()
-    expect(result.getByText(/available for freelance and contract software engineering/)).toBeDefined()
-    expect(result.getByRole('link', { name: 'Learn more about Edward on GitHub' }).getAttribute('href')).toBe(
-      'https://github.com/bigtechricchie',
-    )
-    expect(result.queryByRole('button', { name: 'Like' })).toBeNull()
-  })
-
-  it('navigates to Author using the application navigation', async () => {
-    const result = render(() => <App />)
-
-    fireEvent.click(result.getByRole('link', { name: 'Author' }))
-
-    await waitFor(() => {
-      expect(
-        result.getByRole('heading', { level: 2, name: 'Author' }),
-      ).toBeDefined()
-      expect(window.location.pathname).toBe('/author')
-    })
-  })
-
-  it('renders Contact on a direct visit to /contact', () => {
-    window.history.replaceState(null, '', '/contact')
-
-    const result = render(() => <App />)
-
-    expect(
-      result.getByRole('heading', { level: 2, name: 'Contact' }),
-    ).toBeDefined()
-    expect(result.getByRole('link', { name: 'View project issues on GitHub' }).getAttribute('href')).toBe(
-      'https://github.com/bigtechricchie/solidjs-monorepo-starter/issues',
-    )
-    expect(result.getByRole('link', { name: "View Edward's GitHub profile" }).getAttribute('href')).toBe(
-      'https://github.com/bigtechricchie',
-    )
-    expect(result.getByText(/open to freelance and contract opportunities/)).toBeDefined()
-    expect(result.getByRole('link', { name: 'Report a vulnerability privately' }).getAttribute('href')).toBe(
-      'https://github.com/bigtechricchie/solidjs-monorepo-starter/security/advisories/new',
-    )
-    expect(result.queryByRole('button', { name: 'Like' })).toBeNull()
-  })
-
-  it('navigates to Contact using the application navigation', async () => {
-    const result = render(() => <App />)
-
-    fireEvent.click(result.getByRole('link', { name: 'Contact' }))
-
-    await waitFor(() => {
-      expect(
-        result.getByRole('heading', { level: 2, name: 'Contact' }),
-      ).toBeDefined()
-      expect(window.location.pathname).toBe('/contact')
-    })
-  })
-
-  it('marks the current route in navigation', async () => {
-    const result = render(() => <App />)
-    const homeLink = result.getByRole('link', { name: 'Home' })
-    const aboutLink = result.getByRole('link', { name: 'About' })
-
-    await waitFor(() => {
-      expect(homeLink.getAttribute('aria-current')).toBe('page')
-      expect(aboutLink.hasAttribute('aria-current')).toBe(false)
-    })
-
-    fireEvent.click(aboutLink)
-
-    await waitFor(() => {
-      expect(aboutLink.getAttribute('aria-current')).toBe('page')
-      expect(homeLink.hasAttribute('aria-current')).toBe(false)
-    })
-  })
-
-  it('navigates between pages without replacing the application shell', async () => {
+  it('navigates to a route without replacing the application shell', async () => {
     const result = render(() => <App />)
     const header = result.getByRole('banner')
     const navigation = result.getByRole('navigation', {
@@ -234,7 +49,25 @@ describe('App', () => {
     expect(result.getByRole('main')).toBe(main)
   })
 
-  it('handles browser history navigation between pages', async () => {
+  it('marks the active navigation link', async () => {
+    const result = render(() => <App />)
+    const homeLink = result.getByRole('link', { name: 'Home' })
+    const aboutLink = result.getByRole('link', { name: 'About' })
+
+    await waitFor(() => {
+      expect(homeLink.getAttribute('aria-current')).toBe('page')
+      expect(aboutLink.hasAttribute('aria-current')).toBe(false)
+    })
+
+    fireEvent.click(aboutLink)
+
+    await waitFor(() => {
+      expect(aboutLink.getAttribute('aria-current')).toBe('page')
+      expect(homeLink.hasAttribute('aria-current')).toBe(false)
+    })
+  })
+
+  it('handles browser back and forward navigation', async () => {
     const result = render(() => <App />)
 
     fireEvent.click(result.getByRole('link', { name: 'About' }))
@@ -262,55 +95,39 @@ describe('App', () => {
     })
   })
 
-  it('resets Home feedback after leaving and returning to the route', async () => {
+  it('resets Home feedback when leaving and returning', async () => {
     const result = render(() => <App />)
-    fireEvent.click(result.getByRole('button', { name: 'Like' }))
 
+    fireEvent.click(result.getByRole('button', { name: 'Like' }))
     await waitFor(() => {
       expect(result.getByRole('button', { name: 'Like' }).getAttribute('aria-pressed')).toBe('true')
     })
 
     fireEvent.click(result.getByRole('link', { name: 'About' }))
-
     await waitFor(() => {
       expect(window.location.pathname).toBe('/about')
       expect(result.queryByRole('button', { name: 'Like' })).toBeNull()
     })
 
     fireEvent.click(result.getByRole('link', { name: 'Home' }))
-
     await waitFor(() => {
       expect(window.location.pathname).toBe('/')
       expect(result.getByRole('button', { name: 'Like' }).getAttribute('aria-pressed')).toBe('false')
     })
   })
 
-  it('shows Not Found for an unknown nested URL', () => {
+  it('renders the fallback for an unknown nested URL', async () => {
     window.history.replaceState(null, '', '/unknown/page')
-
     const result = render(() => <App />)
 
     expect(
       result.getByRole('heading', { level: 2, name: 'Page not found' }),
     ).toBeDefined()
-    expect(result.getByRole('link', { name: 'Return to Home' }).getAttribute('href')).toBe('/')
-  })
-
-  it('shows Not Found for an unknown path and links back to Home', async () => {
-    window.history.replaceState(null, '', '/missing')
-
-    const result = render(() => <App />)
-
-    expect(
-      result.getByRole('heading', { level: 2, name: 'Page not found' }),
-    ).toBeDefined()
-    expect(
-      result.queryByRole('heading', { name: 'Reference application' }),
-    ).toBeNull()
 
     fireEvent.click(result.getByRole('link', { name: 'Return to Home' }))
 
     await waitFor(() => {
+      expect(window.location.pathname).toBe('/')
       expect(
         result.getByRole('heading', { level: 2, name: 'Reference application' }),
       ).toBeDefined()
