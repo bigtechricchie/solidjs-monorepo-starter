@@ -38,6 +38,7 @@ describe('App', () => {
 
     expect(result.getByRole('main')).toBeDefined()
     expect(result.getByRole('link', { name: 'Home' })).toBeDefined()
+    expect(result.getByRole('link', { name: 'About' })).toBeDefined()
 
     expect(
       result.getByRole('heading', {
@@ -75,6 +76,32 @@ describe('App', () => {
     await waitFor(() => {
       expect(like.getAttribute('aria-pressed')).toBe('false')
       expect(dislike.getAttribute('aria-pressed')).toBe('false')
+    })
+  })
+
+  it('renders About when the /about route is opened directly', () => {
+    window.history.replaceState(null, '', '/about')
+
+    const result = render(() => <App />)
+
+    expect(
+      result.getByRole('heading', { level: 2, name: 'About this starter' }),
+    ).toBeDefined()
+    expect(result.getByText(/SolidJS/)).toBeDefined()
+    expect(result.getByRole('navigation', { name: 'Reference application' })).toBeDefined()
+    expect(result.queryByRole('button', { name: 'Like' })).toBeNull()
+  })
+
+  it('navigates to About through the application navigation', async () => {
+    const result = render(() => <App />)
+
+    fireEvent.click(result.getByRole('link', { name: 'About' }))
+
+    await waitFor(() => {
+      expect(
+        result.getByRole('heading', { level: 2, name: 'About this starter' }),
+      ).toBeDefined()
+      expect(window.location.pathname).toBe('/about')
     })
   })
 
