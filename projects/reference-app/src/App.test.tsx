@@ -142,6 +142,10 @@ describe('App', () => {
       result.getByRole('heading', { level: 2, name: 'Author' }),
     ).toBeDefined()
     expect(result.getByText(/built and maintained by Edward Siwek/)).toBeDefined()
+    expect(result.getByText(/available for freelance and contract software engineering/)).toBeDefined()
+    expect(result.getByRole('link', { name: 'Learn more about Edward on GitHub' }).getAttribute('href')).toBe(
+      'https://github.com/bigtechricchie',
+    )
     expect(result.queryByRole('button', { name: 'Like' })).toBeNull()
   })
 
@@ -169,6 +173,10 @@ describe('App', () => {
     expect(result.getByRole('link', { name: 'View project issues on GitHub' }).getAttribute('href')).toBe(
       'https://github.com/bigtechricchie/solidjs-monorepo-starter/issues',
     )
+    expect(result.getByRole('link', { name: "View Edward's GitHub profile" }).getAttribute('href')).toBe(
+      'https://github.com/bigtechricchie',
+    )
+    expect(result.getByText(/open to freelance and contract opportunities/)).toBeDefined()
     expect(result.getByRole('link', { name: 'Report a vulnerability privately' }).getAttribute('href')).toBe(
       'https://github.com/bigtechricchie/solidjs-monorepo-starter/security/advisories/new',
     )
