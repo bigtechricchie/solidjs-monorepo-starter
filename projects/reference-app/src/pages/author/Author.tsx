@@ -10,6 +10,15 @@ function Author() {
         with an emphasis on maintainability, clear application boundaries,
         and security-conscious engineering practices.
       </p>
+      <p>
+        Edward is available for freelance and contract software engineering
+        work, including collaboration on other projects.
+      </p>
+      <p>
+        <a href="https://github.com/bigtechricchie">
+          Learn more about Edward on GitHub
+        </a>
+      </p>
     </section>
   )
 }
