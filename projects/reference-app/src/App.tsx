@@ -1,13 +1,10 @@
-import { createSignal } from 'solid-js'
+import { A, Route, Router, type RouteSectionProps } from '@solidjs/router'
 
 import './App.css'
-import StarterFeedback, {
-  type Reaction,
-} from './components/starter-feedback/StarterFeedback'
+import Home from './pages/home/Home'
+import NotFound from './pages/not-found/NotFound'
 
-function App() {
-  const [reaction, setReaction] = createSignal<Reaction | null>(null)
-
+function AppShell(props: RouteSectionProps) {
   return (
     <div class="app">
       <header class="app__header">
@@ -15,23 +12,24 @@ function App() {
           <h1 class="app__title">SolidJS Monorepo Starter</h1>
 
           <nav aria-label="Reference application" class="app__navigation">
-            <a class="app__navigation-link" href="#reference-example">
-              Example
-            </a>
+            <A class="app__navigation-link" end href="/">
+              Home
+            </A>
           </nav>
         </div>
       </header>
 
-      <main class="app__main layout-container">
-        <section class="app__content" id="reference-example">
-          <h2 class="app__section-title">Reference application</h2>
-          <StarterFeedback
-            onReactionChange={setReaction}
-            reaction={reaction()}
-          />
-        </section>
-      </main>
+      <main class="app__main layout-container">{props.children}</main>
     </div>
+  )
+}
+
+function App() {
+  return (
+    <Router root={AppShell}>
+      <Route path="/" component={Home} />
+      <Route path="*" component={NotFound} />
+    </Router>
   )
 }
 
