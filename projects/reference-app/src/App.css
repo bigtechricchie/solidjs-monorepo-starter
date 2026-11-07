@@ -11,6 +11,7 @@
 .app__header-inner {
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-4);
   justify-content: space-between;
   padding-block: var(--space-4);
@@ -26,6 +27,7 @@
 
 .app__navigation {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-4);
 }
 
@@ -33,7 +35,14 @@
   color: inherit;
   font-size: var(--text-base);
   font-weight: var(--font-weight-bold);
-  text-underline-offset: 0.2em;
+  text-decoration: none;
+  text-underline-offset: var(--underline-offset-navigation);
+}
+
+.app__navigation-link:hover,
+.app__navigation-link:focus-visible,
+.app__navigation-link[aria-current='page'] {
+  text-decoration: underline;
 }
 
 .app__main {

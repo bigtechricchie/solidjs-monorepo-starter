@@ -43,7 +43,7 @@ function StarterFeedback(props: StarterFeedbackProps) {
   return (
     <section aria-labelledby="starter-feedback-title" class="starter-feedback">
       <div class="starter-feedback__heading">
-        <h3 id="starter-feedback-title">Do you like this starter?</h3>
+        <h3 id="starter-feedback-title">Do you like this starter</h3>
         <span
           class="starter-feedback__help"
           data-dismissed={helpTooltipDismissed() ? 'true' : 'false'}

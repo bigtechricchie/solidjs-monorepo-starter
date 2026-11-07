@@ -24,7 +24,7 @@ describe('StarterFeedback', () => {
     const result = renderFeedback()
 
     expect(
-      result.getByRole('heading', { level: 3, name: 'Do you like this starter?' }),
+      result.getByRole('heading', { level: 3, name: 'Do you like this starter' }),
     ).toBeDefined()
     expect(result.getByRole('status', { name: '' }).textContent).toBe(
       'Choose a reaction to try this interactive example.',
