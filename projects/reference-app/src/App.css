@@ -35,7 +35,13 @@
   color: inherit;
   font-size: var(--text-base);
   font-weight: var(--font-weight-bold);
+  text-decoration: none;
   text-underline-offset: var(--underline-offset-navigation);
+}
+
+.app__navigation-link:hover,
+.app__navigation-link:focus-visible {
+  text-decoration: underline;
 }
 
 .app__main {
