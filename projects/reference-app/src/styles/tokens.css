@@ -3,6 +3,7 @@
 
   --color-border-subtle: #d8d8d8;
   --color-focus: #005fcc;
+  --color-help-background: #000000;
   --color-negative-border: #fecdca;
   --color-negative-surface: #fef3f2;
   --color-negative-text: #b42318;
@@ -27,12 +28,17 @@
   --font-weight-bold: 700;
   --font-weight-semibold: 600;
 
+  --radius-help-button: 35%;
   --radius-small: 0.375rem;
 
   --space-2: 0.5rem;
   --space-4: 1rem;
   --space-8: 2rem;
 
+  --size-help-button: 1.45rem;
+
   --text-base: 1rem;
   --text-title: 1.5rem;
+
+  --underline-offset-navigation: 0.4em;
 }
