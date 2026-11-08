@@ -43,7 +43,7 @@ The styling architecture follows these principles:
 - Follow BEM-style class naming and alphabetical CSS property ordering.
 - Keep styling responsibilities explicit and avoid unnecessary abstractions.
 
-Stylesheets are imported as build inputs rather than generated dynamically at runtime.
+We use dedicated CSS stylesheets processed by Vite at build time, rather than relying on JavaScript to generate CSS rules in the browser.
 
 This keeps the styling layer straightforward, maintainable, and independent of runtime CSS-generation libraries.
 
