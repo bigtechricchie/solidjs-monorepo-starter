@@ -32,7 +32,20 @@ Further applications, reusable libraries, Go services, routing, state management
 
 ## Native CSS
 
-We use dedicated CSS stylesheets processed by Vite at build time, rather than relying on JavaScript to generate CSS rules in the browser.
+The reference application uses native CSS in dedicated stylesheets rather than Sass, CSS-in-JS, or runtime styling frameworks.
+
+The styling architecture follows these principles:
+
+- Prefer browser-native CSS capabilities over additional styling dependencies.
+- Keep component-specific styles alongside their components.
+- Use CSS custom properties for meaningful design tokens.
+- Prefer logical properties, Flexbox, and CSS Grid for responsive layouts.
+- Follow BEM-style class naming and alphabetical CSS property ordering.
+- Keep styling responsibilities explicit and avoid unnecessary abstractions.
+
+Stylesheets are imported as build inputs rather than generated dynamically at runtime.
+
+This keeps the styling layer straightforward, maintainable, and independent of runtime CSS-generation libraries.
 
 ## Toolchain baseline
 
