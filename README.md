@@ -1,18 +1,16 @@
 # SolidJS Monorepo Starter
 
-A security-focused SolidJS and Go monorepo starter designed for fast prototyping and clear application boundaries.
+A security-focused SolidJS monorepo starter built with TypeScript, native CSS and deliberately minimal dependencies.
 
 Built and maintained by Edward Siwek.
 
 > **Applications own composition. Libraries own capabilities.**
 
-This repository is being constructed incrementally from first principles.
-
-The repository is being designed around explicit ownership, minimal dependencies, reproducible verification, and SolidJS-native architecture.
+This repository uses SolidJS-native architecture, explicit application ownership and reproducible verification. It favours semantic HTML and dedicated CSS stylesheets rather than CSS-in-JS or a CSS preprocessor.
 
 ## Current status
 
-The repository provides a reviewed frontend toolchain, a tested SolidJS reference application with an application shell and accessible interactive example, and repository-owned verification as a foundation for future SolidJS applications and Go services.
+The repository provides a reviewed frontend toolchain and tested SolidJS reference application with public information pages, application-local routing, accessible navigation, interactive feedback and repository-owned verification.
 
 The current baseline includes:
 
@@ -25,10 +23,43 @@ The current baseline includes:
 - a committed lockfile;
 - explicit denial of dependency-provided agent skills;
 - a canonical repository verification command with a Babel-blocked native TSX compiler fixture;
-- a reference application in `projects/reference-app` with an application shell, native CSS structure, accessible interactive feedback, component tests, and explicit development, build, test, and type-check scripts;
+- a reference application in `projects/reference-app` with six application-local page boundaries (Home, About, Security, Author, Contact and Not Found), navigation, native CSS, accessible interactive feedback, component and routing tests, and explicit development, build, test, and type-check scripts;
 - trusted GitHub Actions verification with SHA-pinned actions and minimal permissions.
 
-Further applications, reusable libraries, Go services, routing, state management, and other capabilities will be introduced only when their responsibilities are established and reviewed.
+The current public implementation is frontend-only; no Go service or backend API is included. Further applications, reusable libraries, backend services and other capabilities are outside the demonstrated baseline and require separate justification and review.
+
+## Styling: native CSS, not Sass or CSS-in-JS
+
+This starter deliberately uses **native CSS** instead of Sass/SCSS, Tailwind CSS or a CSS-in-JS styling library.
+
+- Modern CSS custom properties serve as design tokens when a value has a shared meaning.
+- CSS Grid, Flexbox, logical properties and responsive layout features provide styling without a preprocessor.
+- Styles are maintained in dedicated `.css` files, not embedded in component JavaScript as runtime style objects or generated CSS rules.
+- Application, layout, base, reset and component styles have clear ownership boundaries.
+- Semantic HTML, visible keyboard focus and straightforward BEM-style class naming support accessibility and maintainability.
+
+TypeScript components import CSS files so Vite can bundle them; that does **not** mean CSS-in-JS. Native CSS is an engineering and dependency-minimisation choice, **not** an inherent security guarantee.
+
+See [CSS architecture and conventions](docs/css-architecture.md) for the verified file layout, ownership model and trade-offs.
+
+## Security philosophy
+
+We use specific, reviewable controls rather than descriptions such as “ultra-secure” or “fully secure”:
+
+- pinned toolchain and exact dependency versions;
+- a reviewed pnpm lockfile and frozen CI installation;
+- a 72-hour package release-age policy, with narrowly scoped documented exceptions;
+- dependency auditing, native Git safeguards and SHA-pinned GitHub Actions;
+- native Solid compiler verification and local loopback development binding;
+- explicit documentation of what automated checks **do not** prove.
+
+These measures reduce certain risks but do not provide an independent security certification, complete vulnerability coverage or a production deployment security guarantee. See [Security Decisions](docs/security-decisions.md) and [Security Policy](SECURITY.md).
+
+## Reference application routes
+
+The application currently demonstrates Home (`/`), About (`/about`), Security (`/security`), Author (`/author`), Contact (`/contact`), and an explicit Not Found fallback for unmatched paths. The pages live under `projects/reference-app/src/pages/` and use application-local routing.
+
+Direct URL navigation requires a hosting server configured to serve the SPA entry point for supported routes. Deployment configuration is not included as a general-purpose hosting solution in this starter.
 
 ## Toolchain baseline
 
