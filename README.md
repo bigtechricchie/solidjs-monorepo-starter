@@ -30,13 +30,9 @@ The current baseline includes:
 
 Further applications, reusable libraries, Go services, routing, state management, and other capabilities will be introduced only when their responsibilities are established and reviewed.
 
-## Native CSS (no CSS-in-JS)
+## Native CSS
 
-The application uses **native CSS in dedicated stylesheets** instead of runtime CSS-in-JS. Vite processes these stylesheets during the build, allowing the browser to apply CSS without requiring application JavaScript to generate or inject the styling rules dynamically.
-
-This avoids introducing a runtime style-generation layer and its potential overhead, while keeping styling straightforward. The reference application also does not require Sass or a styling framework. **We have not benchmarked a runtime performance improvement** against a CSS-in-JS implementation, so this is a design rationale rather than a measured speed claim.
-
-The current structure uses `styles/tokens.css`, `reset.css`, `base.css`, `layout.css`, `App.css` and component-local stylesheets. We use CSS custom properties, logical properties, Flexbox and BEM-style class naming where appropriate.
+We use dedicated CSS stylesheets processed by Vite at build time, rather than relying on JavaScript to generate CSS rules in the browser.
 
 ## Toolchain baseline
 
